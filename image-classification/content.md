@@ -52,8 +52,8 @@ input_shape = (img_rows, img_cols, 1)
 
 We will re-scale the image data to a value between 0.0 and 1.0.
 ```python
-x_train = x_train.astype(&#39;float32&#39;)
-x_test = x_test.astype(&#39;float32&#39;)
+x_train = x_train.astype('float32')
+x_test = x_test.astype('float32')
 x_train /= 255
 x_test /= 255
 
@@ -72,9 +72,9 @@ We extract the input parameters: learning rate, batch size and the number of epo
 ```python
 
 
-lr = float(sys.argv[1]) if len(sys.argv) &gt; 1 else 0.001
-batch_size = int(sys.argv[2]) if len(sys.argv) &gt; 1 else 32
-nb_epochs = int(sys.argv[3]) if len(sys.argv) &gt; 1 else 10
+lr = float(sys.argv[1]) if len(sys.argv) > 1 else 0.001
+batch_size = int(sys.argv[2]) if len(sys.argv) > 1 else 32
+nb_epochs = int(sys.argv[3]) if len(sys.argv) > 1 else 10
 ```
 
 ## Set MLflow tracking server
@@ -83,9 +83,9 @@ Configure your connection to your tracking server by running mlflow.set_tracking
 
 ```python
 
-mlflow.set_tracking_uri(uri=&#39;http://localhost:5000&#39;)
+mlflow.set_tracking_uri(uri='http://localhost:5000')
 
-experiment_name = &quot;mlflow-cnn-experiment-0&quot;
+experiment_name = "mlflow-cnn-experiment-0"
 expr_id = mlflow.set_experiment(experiment_name)
 ```
 
@@ -94,24 +94,34 @@ expr_id = mlflow.set_experiment(experiment_name)
 Use with mlflow.start_run to create a new MLflow run.
 
 ```python
-with mlflow.start_run(experiment_id=expr_id, run_name=&quot;running-01&quot;):
+with mlflow.start_run(experiment_id=expr_id, run_name="running-01"):
+
 ```
 ### Model definition and training
 Inside the MLflow run, define a CNN model.
  ```python
-
-# Define model architecture
+        # Define model architecture
 model = Sequential()
 
-model.add(Convolution2D(32, 3, 3, activation=&#39;relu&#39;, input_shape=input_shape))
-model.add(Convolution2D(32, 3, 3, activation=&#39;relu&#39;))
+model.add(Convolution2D(32, 3, 3, activation='relu', input_shape=input_shape))
+model.add(Convolution2D(32, 3, 3, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.25))
 
 model.add(Flatten())
-model.add(Dense(128, activation=&#39;relu&#39;))
+model.add(Dense(128, activation='relu'))
 model.add(Dropout(0.5))
-model.add(Dense(10, activation=&#39;softmax&#39;))
+model.add(Dense(10, activation='softmax'))
+
+#Define optimizer
+adam = optimizers.Adam(lr=lr)
+# Compile model
+
+model.compile(loss='categorical_crossentropy',
+              optimizer=adam,
+              metrics=['accuracy'])
+
+
 
 #Define optimizer
 adam = optimizers.Adam(lr=lr)
@@ -131,24 +141,27 @@ Evaluate the model using test data
  ```python
 
 score = model.evaluate(x_test, y_test, verbose=0)
-print(&quot;CNN model&quot;)
-print(&quot;Learning rate: {}, batch_size: {}, nb_epochs: {}&quot;.format(lr, batch_size, nb_epochs))
-print(&#39;Test loss:&#39;, score[0])
-print(&#39;Test accuracy:&#39;, score[1])
+print("CNN model")
+print("Learning rate: {}, batch_size: {}, nb_epochs: {}".format(lr, batch_size, nb_epochs))
+print('Test loss:', score[0])
+print('Test accuracy:', score[1])
+
  ```
 Use MLflow to record the model&#39;s parameters, metrics and model.
  ```python
 
-mlflow.log_param(&quot;lr&quot;, lr)
-mlflow.log_param(&quot;batch_size&quot;, batch_size)
-mlflow.log_param(&quot;nb_epochs&quot;, nb_epochs)
-mlflow.log_metric(&quot;loss&quot;, score[0])
-mlflow.log_metric(&quot;accuracy&quot;, score[1])
-mlflow.sklearn.log_model(model, &quot;model&quot;)
+mlflow.log_param("lr", lr)
+mlflow.log_param("batch_size", batch_size)
+mlflow.log_param("nb_epochs", nb_epochs)
+mlflow.log_metric("loss", score[0])
+mlflow.log_metric("accuracy", score[1])
+
+mlflow.sklearn.log_model(model, "model")
 ```
 
 ##  Full code
  ```python
+
 
 import sys
 import warnings
@@ -165,7 +178,7 @@ from keras.layers import Convolution2D, MaxPooling2D
 from keras.datasets import mnist
 from keras import optimizers
 
-if __name__ == &quot;__main__&quot;:
+if __name__ == "__main__":
 
     # Load pre-shuffled MNIST data into train and test sets
     (x_train, y_train), (x_test, y_test) = mnist.load_data()
@@ -178,8 +191,8 @@ if __name__ == &quot;__main__&quot;:
     x_test = x_test.reshape(x_test.shape[0], img_rows, img_cols, 1)
     input_shape = (img_rows, img_cols, 1)
 
-    x_train = x_train.astype(&#39;float32&#39;)
-    x_test = x_test.astype(&#39;float32&#39;)
+    x_train = x_train.astype('float32')
+    x_test = x_test.astype('float32')
     x_train /= 255
     x_test /= 255
 
@@ -187,35 +200,35 @@ if __name__ == &quot;__main__&quot;:
     y_train = keras.utils.to_categorical(y_train, num_classes)
     y_test = keras.utils.to_categorical(y_test, num_classes)
 
-    lr = float(sys.argv[1]) if len(sys.argv) &gt; 1 else 0.001
-    batch_size = int(sys.argv[2]) if len(sys.argv) &gt; 1 else 32
-    nb_epochs = int(sys.argv[3]) if len(sys.argv) &gt; 1 else 10
+    lr = float(sys.argv[1]) if len(sys.argv) > 1 else 0.001
+    batch_size = int(sys.argv[2]) if len(sys.argv) > 1 else 32
+    nb_epochs = int(sys.argv[3]) if len(sys.argv) > 1 else 10
 
-    mlflow.set_tracking_uri(uri=&#39;http://localhost:5000&#39;)
-    experiment_name = &quot;mlflow-cnn-experiment-0&quot;
+    mlflow.set_tracking_uri(uri='http://localhost:5000')
+    experiment_name = "mlflow-cnn-experiment-0"
     expr_id = mlflow.set_experiment(experiment_name)
 
-    with mlflow.start_run(experiment_id=expr_id, run_name=&quot;running-01&quot;):
+    with mlflow.start_run(experiment_id=expr_id, run_name="running-01"):
         # Define model architecture
         model = Sequential()
 
-        model.add(Convolution2D(32, 3, 3, activation=&#39;relu&#39;, input_shape=input_shape))
-        model.add(Convolution2D(32, 3, 3, activation=&#39;relu&#39;))
+        model.add(Convolution2D(32, 3, 3, activation='relu', input_shape=input_shape))
+        model.add(Convolution2D(32, 3, 3, activation='relu'))
         model.add(MaxPooling2D(pool_size=(2, 2)))
         model.add(Dropout(0.25))
 
         model.add(Flatten())
-        model.add(Dense(128, activation=&#39;relu&#39;))
+        model.add(Dense(128, activation='relu'))
         model.add(Dropout(0.5))
-        model.add(Dense(10, activation=&#39;softmax&#39;))
+        model.add(Dense(10, activation='softmax'))
 
         #Define optimizer
         adam = optimizers.Adam(lr=lr)
         # Compile model
 
-        model.compile(loss=&#39;categorical_crossentropy&#39;,
+        model.compile(loss='categorical_crossentropy',
                       optimizer=adam,
-                      metrics=[&#39;accuracy&#39;])
+                      metrics=['accuracy'])
 
         model.fit(x_train, y_train,
                   batch_size=batch_size, nb_epoch=nb_epochs, verbose=1)
@@ -223,23 +236,24 @@ if __name__ == &quot;__main__&quot;:
         # Evaluate model on test data
         score = model.evaluate(x_test, y_test, verbose=0)
 
-        print(&quot;CNN model&quot;)
-        print(&quot;Learning rate: {}, batch_size: {}, nb_epochs: {}&quot;.format(lr, batch_size, nb_epochs))
-        print(&#39;Test loss:&#39;, score[0])
-        print(&#39;Test accuracy:&#39;, score[1])
-        mlflow.log_param(&quot;lr&quot;, lr)
-        mlflow.log_param(&quot;batch_size&quot;, batch_size)
-        mlflow.log_param(&quot;nb_epochs&quot;, nb_epochs)
-        mlflow.log_metric(&quot;loss&quot;, score[0])
-        mlflow.log_metric(&quot;accuracy&quot;, score[1])
+        print("CNN model")
+        print("Learning rate: {}, batch_size: {}, nb_epochs: {}".format(lr, batch_size, nb_epochs))
+        print('Test loss:', score[0])
+        print('Test accuracy:', score[1])
+        mlflow.log_param("lr", lr)
+        mlflow.log_param("batch_size", batch_size)
+        mlflow.log_param("nb_epochs", nb_epochs)
+        mlflow.log_metric("loss", score[0])
+        mlflow.log_metric("accuracy", score[1])
 
-        mlflow.sklearn.log_model(model, &quot;model&quot;)
+        mlflow.sklearn.log_model(model, "model")
+
 ```
 
 You can run this example using different hyperparameters as follows:
 
 ```python
-python example_name.py &lt;lr&gt; &lt;batch_size&gt; &lt;nb_epochs&gt;
+python example_name.py <learning_rate> <batch_size> <number_of_epochs>
 ```
 
 Each time you run the example, MLflow logs information about your experiment runs in the directory mlruns.
