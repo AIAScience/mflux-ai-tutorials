@@ -20,3 +20,5 @@ Each tutorial resides in its own folder. Tutorial folders contain `content.md` (
 ```
 
 Tutorials should describe a useful case, ideally with some real data instead of toy data. It should be relatively easy to follow the tutorial.
+
+Cover images (`cover.png`) should be 374x260
