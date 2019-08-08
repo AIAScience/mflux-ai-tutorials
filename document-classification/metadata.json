@@ -1,0 +1,8 @@
+{
+  "title": "Document classification",
+  "url_slug": "document-classification",
+  "short_description": "In this tutorial, we will create a simple classifier model that can input video metadata and output a category prediction.",
+  "tags": ["deep learning", "keras", "classification"],
+  "rank": 0,
+  "listed": true
+}
