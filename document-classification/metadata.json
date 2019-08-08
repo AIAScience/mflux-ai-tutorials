@@ -3,5 +3,6 @@
   "short_description": "In this tutorial, we will create a simple classifier model that can input video metadata and output a category prediction.",
   "tags": ["deep learning", "keras", "classification"],
   "rank": 0,
-  "is_listed": true
+  "is_listed": true,
+  "cover_image_filename": "cover.png"
 }
