@@ -1,0 +1,7 @@
+{
+  "title": "Image classification",
+  "short_description": "In this tutorial, we will create an image classifier model that can input an image and output a category prediction.",
+  "tags": ["deep learning", "keras", "classification"],
+  "rank": 1,
+  "is_listed": true
+}
