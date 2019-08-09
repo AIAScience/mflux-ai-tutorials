@@ -1,7 +1,21 @@
 # Time series forecasting tutorial
 
 _Add description, or link to one, of how to set up software_
+
+In this tutorial we will get started with time series forecasting using autoregression (AR) models.
+
+_To begin with, it should be pointed out that with time series forecasting it is often very difficult to
+achieve relative errors as low as could be expected on many other machine learning tasks._
+
+To manage our dependencies we will use Anaconda. You can get it here:
+
+https://www.anaconda.com/download/      make sure to get the python 3 version
+
+Open an Anaconda Prompt ++++
+
 We will need:
+
+python
 
 Pandas
 
@@ -9,13 +23,13 @@ Matplotlib
 
 scikit-learn
 
-In this tutorial we will get started with time series forecasting using autoregression (AR) models.
- 
-_To begin with, it should be pointed out that with time series forecasting it is often very difficult to
-achieve relative errors as low as could be expected in many other machine learning tasks._
+_You may need administrator rights to do this_
+```
+conda install python pandas mathplotlib scikit-learn
+```
 
 #### Setting it up
-_Download Anaconda and use it to get python, numpy, sklearn, pandas. Install mlflow.._
+_Install mlflow.._
 
 _In mlflow/examples create a folder called time_series_tutorial._
 _In this create a file called sunspots.csv and a python file called tutorial.py_
