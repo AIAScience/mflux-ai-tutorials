@@ -2,9 +2,10 @@
 
 _Add description, or link to one, of how to set up software_
 We will need:
+
 Pandas
 
-MatPlotLib
+Matplotlib
 
 scikit-learn
 
@@ -107,7 +108,7 @@ pyplot.show()
 When we now run python time_series_tutorial/tutorial.py from mlflow/examples in an Anaconda Prompt,
 we should get and MSE of 1023 and this plot
 
-_plutti plutti SS_naive_500_10_
+![alt text](time-series-forecasting/images/SS_naive_500_10.png "this comment voted most likely to be forgotten")
 
 Now, lets add a simple AR-model (autoregression) to forecast our series.
 ```
@@ -182,8 +183,9 @@ predictions = AR_forecast()
 ```
 When we run the code now, we get an MSE of 638 and this plot
 
-_pLOL plot plotter på pletten
-SS_AR_500_10_
+_pLOL plot plotter på pletten SS_AR_500_10_
+
+![alt text](time-series-forecasting/images/SS_AR_500_10.png "this comment voted most spikey")
 
 This is the whole code:
 ```
