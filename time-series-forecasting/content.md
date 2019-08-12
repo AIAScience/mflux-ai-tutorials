@@ -5,11 +5,11 @@ In this tutorial we will get started with time series forecasting using autoregr
 _To begin with, it should be pointed out that with time series forecasting it is often very difficult to
 achieve relative errors as low as could be expected on many other machine learning tasks._
 
-#### Setting it up
+## Setting it up
 
 To manage our dependencies we will use Anaconda. You can get it here:
 
-https://www.anaconda.com/download/      (make sure to get the python 3 version)
+[https://www.anaconda.com/download/](https://www.anaconda.com/download/)      (make sure to get the python 3 version)
 
 Open an Anaconda Prompt
 
@@ -27,20 +27,20 @@ _You may need administrator rights to do this_
 ```
 conda install python pandas mathplotlib scikit-learn
 ```
-Clone or download mlflow from https://github.com/mlflow/mlflow
+Clone or download mlflow from [https://github.com/mlflow/mlflow](https://github.com/mlflow/mlflow)
 
 In mlflow/examples create a folder called time_series_tutorial.
 In this create a file called sunspots.csv and a python file called tutorial.py
 
 Open Anaconda Prompt and cd into mlflow/examples.
 
-#### Download the dataset
+### Download the dataset
 Data sets for time series are typically a lot smaller than for other ML methods.  
 To download this one, you can simply go to
-https://raw.githubusercontent.com/jbrownlee/Datasets/master/monthly-sunspots.csv,
+[https://raw.githubusercontent.com/jbrownlee/Datasets/master/monthly-sunspots.csv](https://raw.githubusercontent.com/jbrownlee/Datasets/master/monthly-sunspots.csv),
 select all, copy the whole thing and paste it into sunspots.csv.
 
-#### Beginning to code
+### Beginning to code
 Now to import the data into our python file, type or paste this into tutorial.py:
 ```
 from pandas import Series
@@ -200,7 +200,7 @@ When we run the code now, we get an MSE of 638 and this plot
 
 ![forecast plotted vs actual data](images/SS_AR_500_10.png)
 
-#### The whole code:
+### The whole code:
 ```
 from pandas import Series
 from matplotlib import pyplot
@@ -252,37 +252,3 @@ pyplot.plot(test)
 pyplot.plot(predictions, color="red")
 pyplot.show()
 ```
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
