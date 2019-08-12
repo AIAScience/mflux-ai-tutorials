@@ -1,0 +1,8 @@
+{
+  "title": "Time series forecasting tutorial",
+  "short_description": "Use an autoregression model to forecast a time series",
+  "tags": ["Time series forecasting", "autoregression", "tutorial"],
+  "rank": 0,
+  "is_listed": true,
+  "cover_image_filename": "cover.png"
+}
