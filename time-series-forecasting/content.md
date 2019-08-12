@@ -120,7 +120,7 @@ pyplot.show()
 When we now run python time_series_tutorial/tutorial.py from mlflow/examples in an Anaconda Prompt,
 we should get and MSE of 1023 and this plot
 
-![alt text](time-series-forecasting/images/SS_naive_500_10.png "this comment voted most likely to be forgotten")
+![forecast plotted vs actual data](images/SS_naive_500_10.png)
 
 Now, lets add a simple AR-model (autoregression) to forecast our series.
 ```
@@ -198,7 +198,7 @@ predictions = AR_forecast()
 ```
 When we run the code now, we get an MSE of 638 and this plot
 
-![alt text](time-series-forecasting/images/SS_AR_500_10.png "this comment voted most spikey")
+![forecast plotted vs actual data](images/SS_AR_500_10.png)
 
 #### The whole code:
 ```
