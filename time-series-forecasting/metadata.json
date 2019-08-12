@@ -1,0 +1,8 @@
+{
+  "title": "Time series forecasting",
+  "short_description": "Use an autoregression model to forecast a time series",
+  "tags": ["time series", "forecasting", "autoregression", "scikit-learn"],
+  "rank": 0,
+  "is_listed": true,
+  "cover_image_filename": "cover.png"
+}
