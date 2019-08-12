@@ -4,5 +4,5 @@
   "tags": ["time series", "forecasting", "autoregression", "scikit-learn"],
   "rank": 0,
   "is_listed": true,
-  "cover_image_filename": "cover.png"
+  "cover_image_filename": "time-series-forecasting.png"
 }
