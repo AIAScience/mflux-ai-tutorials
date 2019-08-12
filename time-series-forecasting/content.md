@@ -1,17 +1,17 @@
 # Time series forecasting tutorial
 
-_Add description, or link to one, of how to set up software_
-
 In this tutorial we will get started with time series forecasting using autoregression (AR) models.
 
 _To begin with, it should be pointed out that with time series forecasting it is often very difficult to
 achieve relative errors as low as could be expected on many other machine learning tasks._
 
+#### Setting it up
+
 To manage our dependencies we will use Anaconda. You can get it here:
 
-https://www.anaconda.com/download/      make sure to get the python 3 version
+https://www.anaconda.com/download/      (make sure to get the python 3 version)
 
-Open an Anaconda Prompt ++++
+Open an Anaconda Prompt
 
 We will need:
 
@@ -27,20 +27,18 @@ _You may need administrator rights to do this_
 ```
 conda install python pandas mathplotlib scikit-learn
 ```
+Clone or download mlflow from https://github.com/mlflow/mlflow
 
-#### Setting it up
-_Install mlflow.._
+In mlflow/examples create a folder called time_series_tutorial.
+In this create a file called sunspots.csv and a python file called tutorial.py
 
-_In mlflow/examples create a folder called time_series_tutorial._
-_In this create a file called sunspots.csv and a python file called tutorial.py_
-
-_Open Anaconda Prompt and cd into mlflow/examples_
+Open Anaconda Prompt and cd into mlflow/examples.
 
 #### Download the dataset
 Data sets for time series are typically a lot smaller than for other ML methods.  
 To download this one, you can simply go to
-_https://raw.githubusercontent.com/jbrownlee/Datasets/master/monthly-sunspots.csv,
-select all, copy the whole thing and paste it into sunspots.csv._
+https://raw.githubusercontent.com/jbrownlee/Datasets/master/monthly-sunspots.csv,
+select all, copy the whole thing and paste it into sunspots.csv.
 
 #### Beginning to code
 Now to import the data into our python file, type or paste this into tutorial.py:
@@ -92,7 +90,7 @@ is not an integer.
 
 As a baseline to compare our results against, we make a naive_forecast method.
 This method will always predict that the next value is the same as the last,
-for as long in to the future as we ask of it.
+for as long in to the future as we ask it.
 ```
 def naive_forecast():
 	history = [e for e in train]
@@ -105,7 +103,7 @@ def naive_forecast():
 	return predictions
 ```
 Now, lets run a naive forecast and inspect it.
-We will want pyplot to visualise the output and MSE as a measure of accuracy.
+We will want pyplot to visualise the output and use mean squared error (MSE) as a measure of accuracy.
 ```
 from matplotlib import pyplot
 from sklearn.metrics import mean_squared_error
@@ -161,7 +159,7 @@ model_fit = model.fit()
 coefs = model_fit.params
 ```
 Here we specify that we are using the AR model on the training data and fit it.
-The variable coefs holds the calculated coefficients from the model.
+The variable coefs holds the coefficients calculated by the model.
 These are weights to be applied to the last few elements of our time series in order to forecast the next element.
 ```
 for i in range(0, test_n, forecast_steps):
@@ -170,7 +168,7 @@ for i in range(0, test_n, forecast_steps):
 We have chosen to do one forecast every few steps, and no forcasting in between.
 Here we loop over the relevant time steps to do forecasting. In order to forecast more than one step,
 we will use the output of one forecast as input for the next one.
-Because we will be appending our incorrect forecasts, we make an other variable to hold these.
+Because we will be appending forecasts to the actual historical data, we make an other variable for this.
 ```
 for j in range(forecast_steps):
     forecast_value = coefs[0]
@@ -179,8 +177,11 @@ for j in range(forecast_steps):
     predictions.append(forecast_value)
     history_this_far.append(forecast_value)
 ```
-This loop regards all the forecasts made at one time.
-See that coefs[0] is the constant and note the order coefs are multiplied with history_this_far in.
+This loop calculates all forecasts made at one point in time.
+The formula is
+
+forecast = coefs[0] + coefs[1] * history[-1] + ... + coefs[n] * history[-n]
+
 We save the forecast and append it to history_this_far to be used as our best guess to calculate the next forecast.
 ```
 history.extend(test[i:i+forecast_steps])
@@ -197,11 +198,9 @@ predictions = AR_forecast()
 ```
 When we run the code now, we get an MSE of 638 and this plot
 
-_pLOL plot plotter på pletten SS_AR_500_10_
-
 ![alt text](time-series-forecasting/images/SS_AR_500_10.png "this comment voted most spikey")
 
-This is the whole code:
+#### The whole code:
 ```
 from pandas import Series
 from matplotlib import pyplot
@@ -286,4 +285,4 @@ pyplot.show()
 	
 	
 	
-gimmi speis
+
