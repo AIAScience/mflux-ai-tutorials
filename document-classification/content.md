@@ -15,6 +15,14 @@ Check your installation by running `python -c "import keras"`. If no error appea
 
 When you're ready, move on to the tutorial:
 
+# Install MLflow
+
+Run the following command in the terminal to install MLflow.
+
+```pip install mlflow[extra]```
+
+
+
 # Tutorial
 
 In this tutorial, we will create a simple video classifier model. It will input video metadata and output a category prediction. Here is some info on the dataset:
@@ -278,7 +286,24 @@ Target vector: [0 0 1]
 
 If the model was wrong, why do you think it failed? What can you do to make your model more robust in this case? Discuss with other people.
 
-Next, check out the bonus assignments:
+# Log metrics and store machine learning model in MFLux.ai
+
+Let's log the validation loss and accuracy metric and store the model in MFlux.ai
+
+```python
+import mlflow
+import mlflow.sklearn
+
+for i, metric_name in enumerate(model.metrics_names):
+    mlflow.log_metric("validation_"+ metric_name, evaluation_scores[i])
+mlflow.sklearn.log_model(model, "model")
+```
+
+# Check your tracking UI
+
+You should now be able to see the metric and model that you logged in your MLflow tracking UI:
+
+
 
 # Things to do after you finish the tutorial
 
