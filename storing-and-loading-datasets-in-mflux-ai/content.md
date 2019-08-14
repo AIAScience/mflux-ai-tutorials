@@ -20,10 +20,10 @@ from minio import Minio
 from minio.error import ResponseError, BucketAlreadyOwnedByYou, BucketAlreadyExists
 
 # Insert the correct MFlux.ai environment variables here, as shown on the dashboard page
-os.environ["MLFLOW_TRACKING_URI"] = "http://159.69.151.173:5000/"
-os.environ["MLFLOW_S3_ENDPOINT_URL"] = "http://159.69.151.173:9000"
-os.environ["AWS_ACCESS_KEY_ID"] = "updsxtjymzwe"
-os.environ["AWS_SECRET_ACCESS_KEY"] = "qydujhbxclvz"
+os.environ["MLFLOW_TRACKING_URI"] = ...
+os.environ["MLFLOW_S3_ENDPOINT_URL"] = ...
+os.environ["AWS_ACCESS_KEY_ID"] = "...
+os.environ["AWS_SECRET_ACCESS_KEY"] = ...
 
 
 # For the sake of this example, we'll generate a 2D numpy array that consists of 10000 columns
@@ -87,10 +87,10 @@ from minio import Minio
 from minio.error import ResponseError
 
 # Insert the correct MFlux.ai environment variables here, as shown on the dashboard page
-os.environ["MLFLOW_TRACKING_URI"] = "http://159.69.151.173:5000/"
-os.environ["MLFLOW_S3_ENDPOINT_URL"] = "http://159.69.151.173:9000"
-os.environ["AWS_ACCESS_KEY_ID"] = "updsxtjymzwe"
-os.environ["AWS_SECRET_ACCESS_KEY"] = "qydujhbxclvz"
+os.environ["MLFLOW_TRACKING_URI"] = ...
+os.environ["MLFLOW_S3_ENDPOINT_URL"] = ...
+os.environ["AWS_ACCESS_KEY_ID"] = ...
+os.environ["AWS_SECRET_ACCESS_KEY"] = ...
 
 dataset_filename = "my-dataset.pkl".format()
 
