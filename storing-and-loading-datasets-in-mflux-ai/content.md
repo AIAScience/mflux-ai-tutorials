@@ -2,6 +2,9 @@ It's possible to store datasets in MFlux.ai and make them available to your data
 MFlux.ai's object storage system is powered by [MinIO](https://min.io/), an open source,
 enterprise-grade Amazon S3-compatible Object Storage system.
 
+Note: The code below is currently quite verbose, but we intend to make it much more concise in
+the future.
+
 # Install requirements
 
 `pip install joblib==0.13.2 minio==4.0.19 numpy`
