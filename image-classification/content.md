@@ -1,18 +1,30 @@
-## Tutorial
+# Image classification
 
-This tutorial shows how you can use MLFlow to train a image classification model. We will develop a Convolutional Neural Network (CNN) for the classification. We use the MNIST dataset which is an image dataset of handwritten digits. It has has 60,000 training images and 10,000 test images, each of which are grayscale 28 x 28 sized images.
+This tutorial shows how you can train a image classification model. We will develop a Convolutional Neural Network (CNN) for the classification. We use the MNIST dataset which is an image dataset of handwritten digits. It has has 60,000 training images and 10,000 test images, each of which are grayscale 28 x 28 sized images.
 
-## Install MLflow and the dependencies
-```
-pip install mlflow[extras] mflux-ai
-```
+## Log in to MFlux.ai
 
+## Install Anaconda on your computer
+
+Download and install Anaconda. Select the Python 3.* version):
+https://www.anaconda.com/download/
+
+When Anaconda is installed, open "Anaconda Prompt" or any other terminal where you have ```conda``` available now.
+
+
+## Make an isolated Python environment
+Run ```conda create --name image-classification python=3.6``` in your terminal.
+Then, to activate your new environment, run ```conda activate image-classification```.
+
+
+##  Install the required packages
+
+Run ```pip install mlflow[extras] mflux-ai Keras=2.2```  in your terminal.
 
 
 ## Loading imports
 
 ```python
-
 import sys
 import warnings
 
@@ -27,10 +39,12 @@ from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Convolution2D, MaxPooling2D
 from keras.datasets import mnist
 from keras import optimizers
+
+import mflux-ai
 ```
 
 
-##  Loading &amp; Pre-processing Data
+##  Loading and pre-processing data
 
 The Keras library provides a database of these digits in its keras.datasets module. First we load the MNIST data into train and test sets.
 
@@ -62,13 +76,11 @@ x_test /= 255
 Also, we will one-hot-encode the labels.
 
 ```python
-
 y_train = keras.utils.to_categorical(y_train, num_classes)
 y_test = keras.utils.to_categorical(y_test, num_classes)
-
 ```
 
-## Define and train a cnn model
+## Define and train a CNN model
 Define a CNN model
  ```python
         # Define model architecture
@@ -78,16 +90,14 @@ model.add(Convolution2D(32, 3, 3, activation='relu', input_shape=input_shape))
 model.add(Convolution2D(32, 3, 3, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.25))
-
 model.add(Flatten())
 model.add(Dense(128, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(10, activation='softmax'))
-
 ```
 
 
-Define the optimizer
+Define the optimizer.
 ```python
 adam = optimizers.Adam()
 ```
@@ -98,7 +108,7 @@ Compile the model.
 model.compile(loss='categorical_crossentropy',
               optimizer=adam,
               metrics=['accuracy'])
-``
+```
 
 
 Fit the model using the training dataset.
@@ -111,10 +121,8 @@ model.fit(x_train, y_train,
 Evaluate the model using test data
  ```python
 score = model.evaluate(x_test, y_test, verbose=0)
-print("CNN model")
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
-
  ```
 
 ## Log metrics and store machine learning model in MFLux.ai
@@ -136,6 +144,6 @@ mlflow.sklearn.log_model(model, "model")
 
 ## Check your tracking UI
 
-You should now be able to see the metric and model that you logged in your MLflow tracking UI:
+You should now be able to see the metric and model that you logged in your MLflow tracking UI
 
 
