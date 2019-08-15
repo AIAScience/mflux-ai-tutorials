@@ -15,11 +15,11 @@ Check your installation by running `python -c "import keras"`. If no error appea
 
 When you're ready, move on to the tutorial:
 
-# Install MLflow
+# Install MLflow and M
 
-Run the following command in the terminal to install MLflow.
+Run the following command in the terminal to install MLflow and MFlux.ai.
 
-```pip install mlflow[extra]```
+```pip install mlflow[extra] mflux-ai```
 
 
 
@@ -293,6 +293,9 @@ Let's log the validation loss and accuracy metric and store the model in MFlux.a
 ```python
 import mlflow
 import mlflow.sklearn
+import mflux_ai
+
+mflux_ai.set_env_vars("Insert your key here")
 
 for i, metric_name in enumerate(model.metrics_names):
     mlflow.log_metric("validation_"+ metric_name, evaluation_scores[i])
@@ -301,7 +304,7 @@ mlflow.sklearn.log_model(model, "model")
 
 # Check your tracking UI
 
-You should now be able to see the metric and model that you logged in your MLflow tracking UI:
+You should now be able to see the metric and model that you logged in your MLflow tracking UI.
 
 
 
