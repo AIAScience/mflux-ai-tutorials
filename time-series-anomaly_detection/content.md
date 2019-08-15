@@ -1,4 +1,4 @@
-# Unsupervised anomaly detection in time-series
+# Unsupervised anomaly detection in time series
 
 
 ## Install Anaconda on your computer
@@ -6,19 +6,16 @@
 Download and install Anaconda. Select the Python 3.* version):
 https://www.anaconda.com/download/
 
-When Anaconda is installed, open "Anaconda Prompt" or any other terminal where you have ```conda`` available now
-
-Run the following command to install Scikit-Learn, TensorFlow and Keras (common machine learning libraries):
-
+When Anaconda is installed, open "Anaconda Prompt" or any other terminal where you have ```conda``` available now.
 
 ## Make an isolated Python environment
 Run ```conda create --name anomaly-detection python=3.6``` in your terminal.
-Then, to activate your new environment, run ``conda activate mflux-quickstart```
+Then, to activate your new environment, run ```conda activate anomaly-detection```.
 
 
 ##  Install the required packages
 
-Run ```pip install mlflow[extras]==1.1.0 matplotlib==3.0.3  fbprophet==0.3.post2```  in your terminal.
+Run ```pip install mlflow[extras]==1.1.0 mflux-ai matplotlib==3.0.3  fbprophet==0.3.post2```  in your terminal.
 
 ## Tutorial
 
