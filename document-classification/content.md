@@ -15,7 +15,7 @@ Check your installation by running `python -c "import keras"`. If no error appea
 
 When you're ready, move on to the tutorial:
 
-# Install MLflow and M
+# Install MLflow
 
 Run the following command in the terminal to install MLflow and MFlux.ai.
 
