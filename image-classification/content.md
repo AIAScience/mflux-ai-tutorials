@@ -19,7 +19,7 @@ Then, to activate your new environment, run ```conda activate image-classificati
 
 ##  Install the required packages
 
-Run ```pip install mlflow[extras] mflux-ai Keras=2.2```  in your terminal.
+Run ```pip install mlflow[extras] mflux-ai Keras==2.2```  in your terminal.
 
 
 ## Loading imports
@@ -40,7 +40,7 @@ from keras.layers import Convolution2D, MaxPooling2D
 from keras.datasets import mnist
 from keras import optimizers
 
-import mflux-ai
+import mflux_ai
 ```
 
 
