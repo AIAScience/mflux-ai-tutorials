@@ -115,9 +115,9 @@ we set the column value to 0. Anomalies are marked with 1s.
 
 ```python
 forecast['actual'] = daily['y'].reset_index(drop=True)
-forecasted['anomaly'] = 0
-forecasted.loc[forecasted['actual'] > forecasted['yhat_upper'], 'anomaly'] = 1
-forecasted.loc[forecasted['actual'] < forecasted['yhat_lower'], 'anomaly'] = 1
+forecast['anomaly'] = 0
+forecast.loc[forecast['actual'] > forecast['yhat_upper'], 'anomaly'] = 1
+forecast.loc[forecast['actual'] < forecast['yhat_lower'], 'anomaly'] = 1
 ```
 
 
@@ -136,10 +136,10 @@ print("There are {} anomalies and {} normal data points. {} % of the data points
 We can also make plot which paints anomaly points red.
 ```python
 ax = plt.gca()
-ax.plot(forecasted['ds'].values, forecasted['actual'].values, 'b-')
-ax.scatter(forecasted[forecasted['anomaly'] == 1]['ds'].values,
-            forecasted[forecasted['anomaly'] == 1]['actual'].values, color='red')
-ax.fill_between(forecasted['ds'].values, forecasted['yhat_lower'].values, forecasted['yhat_upper'].values,
+ax.plot(forecast['ds'].values, forecast['actual'].values, 'b-')
+ax.scatter(forecast[forecast['anomaly'] == 1]['ds'].values,
+            forecast[forecast['anomaly'] == 1]['actual'].values, color='red')
+ax.fill_between(forecast['ds'].values, forecast['yhat_lower'].values, forecast['yhat_upper'].values,
                     alpha=0.3, facecolor='r')
 plt.xlabel("Date")
 plt.ylabel("KWH")
