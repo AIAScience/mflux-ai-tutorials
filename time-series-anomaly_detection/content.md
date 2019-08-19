@@ -168,13 +168,13 @@ unsupervised anomaly model.
 ### Saving and loading a custom Facebook Prophet model in MLflow format
 
 We save the trained Prophet model using pickle.
-```python`
+```python
 import pickle
 
 pkl_path = "prophet_model.pkl"
 with open(pkl_path, "wb") as f:
     pickle.dump(model, f)
-``
+```
 
 Next, we define a dictionary that assigns a unique name to the saved Prophet model file.
 
