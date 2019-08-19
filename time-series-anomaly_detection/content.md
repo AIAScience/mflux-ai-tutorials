@@ -30,7 +30,7 @@ the prophet library for modeling our time series.
 
 ## The data set
 
-The data set contains  energy consumption readings in kWh (per half hour) for a sample of London Households that took part in that took part in the
+The data set contains  energy consumption readings in kWh (per half hour) for a sample of London Households that took part in the
 UK Power Networks led Low Carbon London project between November 2011 and February 2014. More information about the project can be found
  [here](https://data.london.gov.uk/dataset/smartmeter-energy-use-data-in-london-households?resource=3527bf39-d93e-4071-8451-df2ade1ea4f2)
 
