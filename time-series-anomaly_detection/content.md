@@ -206,6 +206,37 @@ class ProphetWrapper(mlflow.pyfunc.PythonModel):
         forecast.loc[forecast['actual'] > forecast['yhat_upper'], 'anomaly'] = 1
         forecast.loc[forecast['actual'] < forecast['yhat_lower'], 'anomaly'] = 1
         return forecast['anomaly'].values
+```
 
+We create a dict which defines a Conda environment for the new MLflow model.
+It contains the Prophet library as a dependency, as well as the required CloudPickle library.
 
+```python
+conda_env = {
+    'channels': ['defaults'],
+    'dependencies': [
+        'fpprophet={}'.format(fbprophet.__version__),
+        'cloudpickle={}'.format(cloudpickle.__version__),
+    ],
+    'name': 'fprohpet_env'
+}
+```
+
+Save the MLflow model
+
+```python
+mlflow_pyfunc_model_path = "prophet_mlflow_pyfunc"
+mlflow.pyfunc.save_model(
+    path=mlflow_pyfunc_model_path, python_model=ProphetWrapper(), artifacts=artifacts,
+    conda_env=conda_env)
+```
+Load the model in ```python_function``` format
+
+```python
+loaded_model = mlflow.pyfunc.load_model(mlflow_pyfunc_model_path)
+```
+
+Do anomaly predictions.
+```python
+predictions = loaded_model.predict(pd.DataFrame(daily))
 ```
