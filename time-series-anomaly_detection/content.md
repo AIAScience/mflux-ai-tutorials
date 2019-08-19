@@ -188,7 +188,6 @@ import mlflow.pyfunc
 class ProphetWrapper(mlflow.pyfunc.PythonModel):
 
     def load_context(self, context):
-
         with open(context.artifacts["prophet_model"], "rb") as f:
             model = pickle.load(f)
         self.prophet_model = model
