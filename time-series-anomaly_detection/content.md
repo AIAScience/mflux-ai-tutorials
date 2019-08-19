@@ -90,7 +90,7 @@ daily['ds'].apply(lambda x: x.strftime('%Y-%m-%d'))
 ```
 
 ## Modeling
-Now we can create a model, fit to the data and make a forecast.
+Now we can create a model, fit it to the data and make a forecast.
 
 ```python
 model = fbprophet.Prophet()
