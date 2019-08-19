@@ -73,7 +73,6 @@ We want to resample by day by aggregating kwH during this period.
 data['KWH/hh (per half hour) '] = pd.to_numeric(data['KWH/hh (per half hour) '], downcast='float', errors='coerce')
 daily = data.resample('D').sum()
 daily.reset_index(inplace=True)
-
 ```
 
 In order to use Prophet, we need to rename our columns. The date column must be called 'ds'
@@ -115,7 +114,7 @@ We make a new anomaly column in the forecast dataframe. If a data point is insid
 we set the column value to 0. Anomalies are marked with 1s.
 
 ```python
-
+forecast['actual'] = daily['y'].reset_index(drop=True)
 forecasted['anomaly'] = 0
 forecasted.loc[forecasted['actual'] > forecasted['yhat_upper'], 'anomaly'] = 1
 forecasted.loc[forecasted['actual'] < forecasted['yhat_lower'], 'anomaly'] = 1
@@ -137,14 +136,9 @@ print("There are {} anomalies and {} normal data points. {} % of the data points
 We can also make plot which paints anomaly points red.
 ```python
 ax = plt.gca()
-
 ax.plot(forecasted['ds'].values, forecasted['actual'].values, 'b-')
-
 ax.scatter(forecasted[forecasted['anomaly'] == 1]['ds'].values,
             forecasted[forecasted['anomaly'] == 1]['actual'].values, color='red')
-
-
-
 ax.fill_between(forecasted['ds'].values, forecasted['yhat_lower'].values, forecasted['yhat_upper'].values,
                     alpha=0.3, facecolor='r')
 plt.xlabel("Date")
@@ -174,7 +168,7 @@ import pickle
 pkl_path = "prophet_model.pkl"
 with open(pkl_path, "wb") as f:
     pickle.dump(model, f)
-``
+```
 
 Next, we define a dictionary that assigns a unique name to the saved Prophet model file.
 
