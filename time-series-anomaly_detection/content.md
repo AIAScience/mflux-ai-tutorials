@@ -21,7 +21,7 @@ Run ```pip install mlflow[extras]==1.1.0 mflux-ai matplotlib==3.0.3  fbprophet==
 
 In this tutorial, we will create an unsupervised anomaly detection model for time series. Anomaly detection for time series can be formulated as finding outlier data points relative to some standard or usual signal.
 It will input a time series and detect abnormal time series points. The figure below shows
-an example of a time series with one abnormal peak.
+an example of a time series with one abnormal data point.
 
  ![alt text](abnormal.png "test")
 
@@ -174,7 +174,7 @@ import pickle
 pkl_path = "prophet_model.pkl"
 with open(pkl_path, "wb") as f:
     pickle.dump(model, f)
-```
+``
 
 Next, we define a dictionary that assigns a unique name to the saved Prophet model file.
 
