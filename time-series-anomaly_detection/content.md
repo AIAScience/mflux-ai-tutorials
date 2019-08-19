@@ -186,7 +186,7 @@ artifacts = {
 
 We define a wrapper class around the Facebook Prophet model. It has a custom
 predict method which first performs forecast and afterwards labels the
-data points.
+data points using the uncertainty intervals.
 
 ```python
 import mlflow.pyfunc
