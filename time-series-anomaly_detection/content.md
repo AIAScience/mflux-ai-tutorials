@@ -26,15 +26,15 @@ an example of a time series with one abnormal data point.
  ![alt text](abnormal.png "test")
 
 We will focus on unsupervised learning, i.e we do not have labeled data points. We will use
-the prophet library for modeling our time series.
+the [Facebook Prophet library](https://github.com/facebook/prophet) for modeling our time series.
 
 ## The data set
 
 The data set contains  energy consumption readings in kWh (per half hour) for a sample of London Households that took part in the
 UK Power Networks led Low Carbon London project between November 2011 and February 2014. More information about the project can be found
- [here](https://data.london.gov.uk/dataset/smartmeter-energy-use-data-in-london-households?resource=3527bf39-d93e-4071-8451-df2ade1ea4f2)
+ [here](https://data.london.gov.uk/dataset/smartmeter-energy-use-data-in-london-households?resource=3527bf39-d93e-4071-8451-df2ade1ea4f2).
 
-The data set is publicly available at https://data.london.gov.uk/download/smartmeter-energy-use-data-in-london-households/04feba67-f1a3-4563-98d0-f3071e3d56d1/Power-Networks-LCL-June2015(withAcornGps).csv_Pieces.zip
+You can download the data set [here](https://data.london.gov.uk/download/smartmeter-energy-use-data-in-london-households/04feba67-f1a3-4563-98d0-f3071e3d56d1/Power-Networks-LCL-June2015(withAcornGps).csv_Pieces.zip).
 
 ## Library imports
 ```python
@@ -149,12 +149,12 @@ plt.show()
 
 ## MLflow and custom models
 
-Facebook Prophet is not explicitly supported by MFflow. Fortunately, MLflow supports custom python models.
-THe ``mlflow.pyfunc`` module provides utilites for creating MLFlow models
+Facebook Prophet is not explicitly supported by MLflow. Fortunately, MLflow supports custom python models.
+The ``mlflow.pyfunc`` module provides utilites for creating MLFlow models
 that contains user-spesific code and artifact(file) dependencies.
 These artifact dependencies may include serialized models produced by any Python ML library.
 
-We will show how you can use ```mlflow.pyfunc``` for saving and loading the custom
+We will show how you can use ```mlflow.pyfunc``` for saving and loading the
 unsupervised anomaly model.
 
 
@@ -179,7 +179,7 @@ artifacts = {
 ```
 
 We define a wrapper class around the Facebook Prophet model. It has a custom
-predict method which first performs forecast and afterwards labels the
+predict method which first performs forecast using our trained model and afterwards labels the
 data points using the uncertainty intervals.
 
 ```python
@@ -215,7 +215,7 @@ conda_env = {
 }
 ```
 
-Save the MLflow model
+Save the MLflow model.
 
 ```python
 mlflow_pyfunc_model_path = "prophet_mlflow_pyfunc"
@@ -223,7 +223,7 @@ mlflow.pyfunc.save_model(
     path=mlflow_pyfunc_model_path, python_model=ProphetWrapper(), artifacts=artifacts,
     conda_env=conda_env)
 ```
-Load the model in ```python_function``` format
+Load the model in ```python_function``` format.
 
 ```python
 loaded_model = mlflow.pyfunc.load_model(mlflow_pyfunc_model_path)
