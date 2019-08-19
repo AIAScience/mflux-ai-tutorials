@@ -89,6 +89,7 @@ Next, we convert the date column to the format Prophet uses.
 daily['ds'].apply(lambda x: x.strftime('%Y-%m-%d'))
 ```
 
+## Modeling
 Now we can create a model, fit to the data and make a forecast.
 
 ```python
@@ -152,4 +153,59 @@ plt.show()
 ```
  ![alt text](anomaly_plot.png "Anomalies")
 
+## MLflow and custom models
 
+Facebook Prophet is not explicitly supported by MFflow. Fortunately, MLflow supports custom python models.
+THe ``mlflow.pyfunc`` module provides utilites for creating MLFlow models
+that contains user-spesific code and artifact(file) dependencies.
+These artifact dependencies may include serialized models produced by any Python ML library.
+
+We will show how you can use ```mlflow.pyfunc``` for saving and loading the custom
+unsupervised anomaly model.
+
+
+
+### Saving and loading a custom Facebook Prophet model in MLflow format
+
+We save the trained Prophet model using pickle.
+```python`
+import pickle
+
+pkl_path = "prophet_model.pkl"
+with open(pkl_path, "wb") as f:
+    pickle.dump(model, f)
+``
+
+Next, we define a dictionary that assigns a unique name to the saved Prophet model file.
+
+```python
+artifacts = {
+    "prophet_model": pkl_path
+}
+```
+
+We define a wrapper class around the Facebook Prophet model. It has a custom
+predict method which first performs forecast and afterwards labels the
+data points.
+
+```python
+import mlflow.pyfunc
+
+class ProphetWrapper(mlflow.pyfunc.PythonModel):
+
+    def load_context(self, context):
+
+        with open(context.artifacts["prophet_model"], "rb") as f:
+            model = pickle.load(f)
+        self.prophet_model = model
+
+    def predict(self, context, model_input):
+        forecast = self.prophet_model.predict(model_input)
+        forecast['anomaly'] = 0
+        forecast['actual'] = model_input['y'].reset_index(drop=True)
+        forecast.loc[forecast['actual'] > forecast['yhat_upper'], 'anomaly'] = 1
+        forecast.loc[forecast['actual'] < forecast['yhat_lower'], 'anomaly'] = 1
+        return forecast['anomaly'].values
+
+
+```
