@@ -23,7 +23,8 @@ In this tutorial, we will create an unsupervised anomaly detection model for tim
 It will input a time series and detect abnormal time series points. The figure below shows
 an example of a time series with one abnormal data point.
 
- ![alt text](abnormal.png "test")
+![Abnormal](abnormal.png)
+
 
 We will focus on unsupervised learning, i.e we do not have labeled data points. We will use
 the [Facebook Prophet library](https://github.com/facebook/prophet) for modeling our time series.
@@ -106,7 +107,7 @@ code makes a plot of the actual value, the forecast and the uncertainty interval
 model.plot(forecast, xlabel='Date', ylabel='KWH')
 plt.show()
 ```
- ![alt text](forecast.png "forecast")
+![Forecast](forecast.png)
 
 
 We set as anomalies everything higher than the top and lower the bottom of the uncertainty intervals.
@@ -127,9 +128,8 @@ We can now calculate anomaly statistics.
 n_obs = forecast.shape[0]
 n_anomalies = forecast['anomaly'].sum()
 n_normal = n_obs - n_anomalies
-print("There are {} anomalies and {} normal data points. {} % of the data points are anomalies.".format(n_anomalies,
-                                                                                                        n_normal,
-                                                                                                        int((n_anomalies / n_normal) * 100)))                                                                                                        n_normal,
+print("There are {} anomalies and {} normal data points. {} % of the data points are anomalies."
+.format(n_anomalies,n_normal,int((n_anomalies / n_normal) * 100)))                                                                                                        n_normal,
 ```
 
 
@@ -145,7 +145,8 @@ plt.xlabel("Date")
 plt.ylabel("KWH")
 plt.show()
 ```
- ![alt text](anomaly_plot.png "Anomalies")
+![Anomalies](anomaly_plot.png)
+
 
 ## MLflow and custom models
 
