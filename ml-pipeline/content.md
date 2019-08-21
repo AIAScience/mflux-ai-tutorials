@@ -49,9 +49,10 @@ reviews:
 ```
 
 
-##Creating a pipeline
+## Creating the data pre-processing pipeline
 
-We will now create a pipeline from a set of nodes, which are Python functions.
+We will now create a pipeline from a set of nodes, which are Python functions. This
+pipeline will preprocess the data by extracting feature vectors and target vectors.
 We create a file for processing the data called ```data_engineering.py```
 inside the ```nodes``` folder. Add the following code in the file:
 
@@ -143,9 +144,106 @@ def create_pipeline(**kwargs):
 
 ```
 
-This pipeline will extract features and targets from the data and also extract the number of categories.
-If you want  any of this data to persist after the pipeline is finished running you can add them in the
+This pipeline will extract feature and target vectors from the data and also extract the number of categories.
+If you want any of this data to persist after the pipeline is finished running you can add them in the
 ```conf/base/catalog.yml``.
 
-### Creating nodes
+### Creating the data science pipeline
 
+Next, we will make a pipeline for a video classification model. Create a file
+```src/ml_pipeline/nodes/video_classification.py``` and add the following code to it:
+
+
+```python
+import logging
+from typing import Dict, List
+
+import keras
+import numpy as np
+from keras.layers.core import Dense
+from keras.models import Sequential
+from keras.optimizers import SGD
+from sklearn.model_selection import train_test_split
+
+
+def split_data(X: np.array, y:np.array, parameters: Dict) -> List:
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=parameters["test_size"], random_state=parameters["random_state"]
+    )
+
+    return [X_train, X_test, y_train, y_test]
+
+
+def train_model(X_train: np.ndarray, y_train: np.ndarray, num_categories: int) -> keras.models.Model:
+    num_hidden_nodes = 10
+    model = Sequential()
+    model.add(Dense(num_hidden_nodes, input_dim=X_train.shape[1], activation="relu"))
+    model.add(Dense(num_categories, activation="softmax"))
+
+    model.compile(
+        loss="categorical_crossentropy", optimizer=SGD(momentum=0.0), metrics=["accuracy"]
+    )
+    model.fit(X_train, y_train, epochs=50)
+
+    return model
+
+
+def evaluate_model(model: keras.models.Model, X_test: np.ndarray, y_test: np.ndarray):
+    evaluation_scores = model.evaluate(X_test, y_test)
+    logger = logging.getLogger(__name__)
+    for i, metric_name in enumerate(model.metrics_names):
+
+```
+
+Add the following to ```conf/base/parameters.yml```:
+
+```python
+test_size: 0.2
+random_state: 3
+```
+
+We will also save the trained model by adding the following to ``conf/base/catalog.yml```
+
+```python
+model:
+  type: PickleLocalDataSet
+  filepath: data/06_models/regressor.pickle
+  versioned: true
+```
+
+
+We can now create a pipeline for a video classification model by updating the ```create_pipeline()```
+
+```python
+def create_pipeline(**kwargs):
+    """Create the project's pipeline.
+
+    Args:
+        kwargs: Ignore any additional arguments added in the future.
+
+    Returns:
+        Pipeline: The resulting pipeline.
+
+    """
+    de_pipeline = Pipeline(
+        [
+            node(create_video_features, "videos", "features", name="preprocess1"),
+            node(create_video_targets, ["videos","categories"], "targets", name="preprocess2"),
+            node(extract_num_categories,"categories", "num_categories")
+        ]
+    )
+
+    ds_pipeline = Pipeline(
+        [
+            node(
+                split_data,
+                ["features", "targets", "parameters"],
+                ["X_train", "X_test", "y_train", "y_test"],
+            ),
+            node(train_model, ["X_train", "y_train","num_categories" ], "model"),
+            node(evaluate_model, ["model", "X_test", "y_test"], None),
+        ]
+    )
+
+    return de_pipeline + ds_pipeline
+```
