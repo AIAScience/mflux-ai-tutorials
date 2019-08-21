@@ -24,7 +24,7 @@ We will use create a pipline for the video classification problem.
 
 ## Creating the tutorial project
 
-Run ```kedro new``` to create a new empty template project. Call the project ml-pipeline. Choose ```n`` to
+Run ```kedro new``` to create a new empty template project. Call the project ml-pipeline. Choose ```n``` to
 create a project template without a dummy dataset example. Within your project's root directory, install project
 dependencies by running ```kedro install```.
 
@@ -215,7 +215,7 @@ model:
 We can now create a pipeline for a video classification model by updating the ```create_pipeline()```
 
 ```python
-def create_pipeline(**kwargs):
+de create_pipeline(**kwargs):
     """Create the project's pipeline.
 
     Args:
