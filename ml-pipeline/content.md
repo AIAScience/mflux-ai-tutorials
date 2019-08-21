@@ -108,7 +108,7 @@ def extract_num_categories(categories: json) -> int:
 ```
 
 We can use these functions as nodes into the pipeline in ```pipeline.py```. The
-```create_pipeline`` will look like this:
+```create_pipeline``` will look like this:
 
 ```python
 from kedro.pipeline import node, Pipeline
