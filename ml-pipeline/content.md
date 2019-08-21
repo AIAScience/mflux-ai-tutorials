@@ -108,7 +108,7 @@ def extract_num_categories(categories: json) -> int:
 ```
 
 We can use these functions as nodes into the pipeline in ```pipeline.py```. The
-```create_pipeline``` will look like this:
+```create_pipeline`` will look like this:
 
 ```python
 from kedro.pipeline import node, Pipeline
@@ -202,7 +202,7 @@ test_size: 0.2
 random_state: 3
 ```
 
-We will also save the trained model by adding the following to ```conf/base/catalog.yml```
+We will also save the trained model by adding the following to ```conf/base/catalog.yml```:
 
 ```python
 model:
@@ -212,7 +212,7 @@ model:
 ```
 
 
-We can now create a pipeline for a video classification model by updating the ```create_pipeline()```
+We can now create a pipeline for a video classification model by updating the ```create_pipeline()```:
 
 ```python
 def create_pipeline(**kwargs):
