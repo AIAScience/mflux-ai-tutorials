@@ -39,13 +39,13 @@ Register the datasets in the ```conf/base/catalog.yml``` file by adding
 this to the file:
 
 ```yaml
-companies:
+categories:
   type: JSONLocalDataSet
-  filepath: data/01_raw/companies.csv
+  filepath: data/01_raw/categories.json
 
-reviews:
+videos:
   type: JSONLocalDataSet
-  filepath: data/01_raw/reviews.csv
+  filepath: data/01_raw/videos.json
 ```
 
 
