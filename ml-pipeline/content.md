@@ -202,7 +202,7 @@ test_size: 0.2
 random_state: 3
 ```
 
-We will also save the trained model by adding the following to ``conf/base/catalog.yml```
+We will also save the trained model by adding the following to ```conf/base/catalog.yml```
 
 ```python
 model:
