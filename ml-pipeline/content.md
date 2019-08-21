@@ -111,7 +111,7 @@ We can use these functions as nodes into the pipeline in ```pipeline.py```. The
 ```create_pipeline``` will look like this:
 
 ```python
-fro kedro.pipeline import node, Pipeline
+from kedro.pipeline import node, Pipeline
 from ml_pipeline.nodes.data_engineering import (
     create_video_features,
     create_video_targets,
@@ -146,7 +146,7 @@ def create_pipeline(**kwargs):
 
 This pipeline will extract feature and target vectors from the data and also extract the number of categories.
 If you want any of this data to persist after the pipeline is finished running you can add them in the
-```conf/base/catalog.yml``.
+```conf/base/catalog.yml```.
 
 ### Creating the data science pipeline
 
