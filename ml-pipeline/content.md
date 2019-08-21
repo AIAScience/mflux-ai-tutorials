@@ -215,7 +215,7 @@ model:
 We can now create a pipeline for a video classification model by updating the ```create_pipeline()```
 
 ```python
-de create_pipeline(**kwargs):
+def create_pipeline(**kwargs):
     """Create the project's pipeline.
 
     Args:
