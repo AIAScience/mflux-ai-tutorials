@@ -320,7 +320,7 @@ import mlflow.keras
 import mflux_ai
 ```
 
-In the same file replace the method ```evaluate_model()`` with this new method definition:
+In the same file replace the method ```evaluate_model()``` with this new definition:
 ```python
 def evaluate_model(model: keras.models.Model, x_test: np.ndarray, y_test: np.ndarray):
     """
@@ -338,7 +338,7 @@ def evaluate_model(model: keras.models.Model, x_test: np.ndarray, y_test: np.nda
     mlflow.keras.log_model(model, "model")
 ```
 
-Remember to replace the "Your key" field with your mflux.ai key. 
+Remember to replace the "Your key" field with your MFlux.ai key.
 
 ## Check your tracking UI
 You should now be able to see the metric and model that you logged in your MLflow tracking UI.
