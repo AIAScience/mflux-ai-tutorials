@@ -306,3 +306,39 @@ The de_pipeline will preprocess the data, and ds_pipeline will then create featu
 
 
 
+## Log metrics and store machine learning model in MFlux.ai
+Let's log the metrics and store the model in MFlux.ai.
+
+Remove the model from the data set definition in ```conf/base/catalog.yml```.
+MFlux.ai will instead take care of the model storing and versioning.
+
+In the file ```src/ml_pipeline/nodes/video_classification.py``` add the following imports
+
+```python
+import mlflow
+import mlflow.keras
+import mflux_ai
+```
+
+In the same file replace the method ```evaluate_model()`` with this new method definition:
+```python
+def evaluate_model(model: keras.models.Model, x_test: np.ndarray, y_test: np.ndarray):
+    """
+    Calculate the validation accuracy and the validation loss. Log it to MFlux.ai. Store
+    the model in MFlux.ai
+    :param model: Trained model.
+    :param x_test: Testing data of features.
+    :param y_test: Testing data for target.
+    """
+    mflux_ai.init("Your Key")
+    evaluation_scores = model.evaluate(x_test, y_test)
+    for i, metric_name in enumerate(model.metrics_names):
+        mlflow.log_metric("validation_"+ str(metric_name), evaluation_scores[i])
+    mlflow.log_param("model_type", model.__class__.__name__)
+    mlflow.keras.log_model(model, "model")
+```
+
+Remember to replace the "Your key" field with your mflux.ai key. 
+
+## Check your tracking UI
+You should now be able to see the metric and model that you logged in your MLflow tracking UI.
