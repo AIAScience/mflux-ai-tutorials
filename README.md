@@ -13,7 +13,7 @@ Each tutorial resides in its own folder. The folder name is the "slug" that defi
   "title": "Document classification",
   "short_description": "In this tutorial, we will create a simple classifier model that can input video metadata and output a category prediction.",
   "tags": ["deep learning", "keras", "classification"],
-  "rank": 0,
+  "rank": 999,
   "is_listed": true,
   "cover_image_filename": "cover.png"
 }
