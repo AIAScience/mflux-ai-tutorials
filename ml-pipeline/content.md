@@ -20,7 +20,7 @@ Run ```pip install mlflow[extras]==1.1.0 mflux-ai kedro keras tensorflow```  in 
 ## Tutorial
 
 In this tutorial we will create a complete machine learning pipeline using [Kedro](https://github.com/quantumblacklabs/kedro).
-We will use create a pipline for the video classification problem.
+We will create a pipline for the video classification problem.
 
 ## Creating the tutorial project
 
@@ -180,7 +180,7 @@ If you want any of this data to persist after the pipeline is finished running y
 
 ### Creating the data science pipeline
 
-Next, we will make a pipeline for a video classification model. Create a file
+Next, we will make a pipeline for training and validation a video classification model. Create a file
 ```src/ml_pipeline/nodes/video_classification.py``` and add the following code to it:
 
 
@@ -262,7 +262,7 @@ model:
 ```
 
 
-We can now create a pipeline for a video classification model by updating the ```create_pipeline()```:
+We can now create a pipeline for training and validating a classification model by updating the ```create_pipeline()```:
 
 ```python
 def create_pipeline(**kwargs):
@@ -297,3 +297,12 @@ def create_pipeline(**kwargs):
 
     return de_pipeline + ds_pipeline
 ```
+
+The two pipelines are merged together in ```de_pipeline + ds_pipeline```. Both pipelines will be executed when you invoke the following:
+
+```kedro run```
+
+The de_pipeline will preprocess the data, and ds_pipeline will then create features, train and evaluate the model.
+
+
+
