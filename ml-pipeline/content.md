@@ -62,7 +62,14 @@ import json
 import numpy as np
 
 
-def vectorize_video_input(video, num_tags, tag_to_index):
+def vectorize_video_input(video: dict, num_tags: int, tag_to_index: dict) -> np.array:
+    """
+    Vectorize the video.
+    :param video: video data.
+    :param num_tags: number of tags.
+    :param tag_to_index: dict which maps a tag to an index.
+    :return: feature vector.
+    """
     input_vector = [0] * num_tags
     for tag in video["tags"]:
         tag_index = tag_to_index.get(tag, None)
@@ -71,7 +78,14 @@ def vectorize_video_input(video, num_tags, tag_to_index):
     return input_vector
 
 
-def vectorize_video_target(video, num_categories, category_id_to_index):
+def vectorize_video_target(video: dict, num_categories: int, category_id_to_index: dict) -> np.array:
+    """
+    Vectorize the video target.
+    :param video: video data.
+    :param num_categories: number of categories.
+    :param category_id_to_index: dict which maps a category to an index.
+    :return: target vector.
+    """
     target_vector = [0] * num_categories
     category_index = category_id_to_index.get(video["target_category_id"], None)
     if category_index is not None:
@@ -80,6 +94,11 @@ def vectorize_video_target(video, num_categories, category_id_to_index):
 
 
 def create_video_features(videos: json) -> np.array:
+    """
+    Create feature vectors for the videos.
+    :param videos: video data.
+    :return: feature vectors.
+    """
     tags = set()
     for video in videos:
         for tag in video["tags"]:
@@ -92,18 +111,29 @@ def create_video_features(videos: json) -> np.array:
     return input_vectors
 
 
-def create_video_targets(videos:json, categories: json) -> np.array:
+def create_video_targets(videos: json, categories: json) -> np.array:
+    """
+    Create target vectors for the videos.
+    :param videos: video data.
+    :param categories:  video categories.
+    :return: target vectors.
+    """
     num_categories = len(categories)
     category_id_to_index = {
         category["id"]: index for index, category in enumerate(categories)
     }
-    target_vectors = [vectorize_video_target(video,  num_categories, category_id_to_index) for video in videos]
+    target_vectors = [vectorize_video_target(video, num_categories, category_id_to_index) for video in videos]
     target_vectors = np.array(target_vectors)
 
     return target_vectors
 
 
 def extract_num_categories(categories: json) -> int:
+    """
+    Extract how many categories the data set contains.
+    :param categories: categories data.
+    :return: number of categories.
+    """
     return len(categories)
 ```
 
@@ -166,33 +196,53 @@ from keras.optimizers import SGD
 from sklearn.model_selection import train_test_split
 
 
-def split_data(X: np.array, y:np.array, parameters: Dict) -> List:
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=parameters["test_size"], random_state=parameters["random_state"]
+def split_data(x: np.array, y: np.array, parameters: Dict) -> List:
+    """
+    Splits data into training and test sets.
+    :param x: feature vector.
+    :param y: target vector.
+    :param parameters: Parameters defined in parameters.yml.
+    :return: A list containing split data.
+    """
+    x_train, x_test, y_train, y_test = train_test_split(
+        x, y, test_size=parameters["test_size"], random_state=parameters["random_state"]
     )
 
-    return [X_train, X_test, y_train, y_test]
+    return [x_train, x_test, y_train, y_test]
 
 
-def train_model(X_train: np.ndarray, y_train: np.ndarray, num_categories: int) -> keras.models.Model:
+def train_model(x_train: np.ndarray, y_train: np.ndarray, num_categories: int) -> keras.models.Model:
+    """
+    Train the model.
+    :param x_train: training data of features.
+    :param y_train: training data for labels.
+    :param num_categories: number of different categories to predict.
+    :return: Trained model.
+    """
     num_hidden_nodes = 10
     model = Sequential()
-    model.add(Dense(num_hidden_nodes, input_dim=X_train.shape[1], activation="relu"))
+    model.add(Dense(num_hidden_nodes, input_dim=x_train.shape[1], activation="relu"))
     model.add(Dense(num_categories, activation="softmax"))
 
     model.compile(
         loss="categorical_crossentropy", optimizer=SGD(momentum=0.0), metrics=["accuracy"]
     )
-    model.fit(X_train, y_train, epochs=50)
+    model.fit(x_train, y_train, epochs=50)
 
     return model
 
 
-def evaluate_model(model: keras.models.Model, X_test: np.ndarray, y_test: np.ndarray):
-    evaluation_scores = model.evaluate(X_test, y_test)
+def evaluate_model(model: keras.models.Model, x_test: np.ndarray, y_test: np.ndarray):
+    """
+    Calculate the validation accuracy and the validation loss.
+    :param model: Trained model.
+    :param x_test: Testing data of features.
+    :param y_test: Testing data for target.
+    """
+    evaluation_scores = model.evaluate(x_test, y_test)
     logger = logging.getLogger(__name__)
     for i, metric_name in enumerate(model.metrics_names):
-
+        logger.info("Validation {}: {:.3f}".format(metric_name, evaluation_scores[i]))
 ```
 
 Add the following to ```conf/base/parameters.yml```:
