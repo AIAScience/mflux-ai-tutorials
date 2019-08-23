@@ -1,0 +1,8 @@
+{
+  "title": "Machine learning pipeline",
+  "short_description": "In this tutorial, we will create a machine learning pipeline for a document classification problem.",
+  "tags": ["pipeline","kedro","deep learning", "keras", "classification"],
+  "rank": 0,
+  "is_listed": true,
+  "cover_image_filename": "cover.png"
+}

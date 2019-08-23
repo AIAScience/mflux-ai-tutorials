@@ -25,7 +25,6 @@ an example of a time series with one abnormal data point.
 
 ![Abnormal](abnormal.png)
 
-
 We will focus on unsupervised learning, i.e we do not have labeled data points. We will use
 the [Facebook Prophet library](https://github.com/facebook/prophet) for modeling our time series.
 
