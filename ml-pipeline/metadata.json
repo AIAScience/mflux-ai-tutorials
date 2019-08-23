@@ -1,8 +1,14 @@
 {
   "title": "Machine learning pipeline",
-  "short_description": "In this tutorial, we will create a machine learning pipeline for a document classification problem.",
-  "tags": ["pipeline","kedro","deep learning", "keras", "classification"],
-  "rank": 0,
+  "short_description": "Create a machine learning pipeline for a document classification problem.",
+  "tags": [
+    "pipeline",
+    "kedro",
+    "deep learning",
+    "keras",
+    "classification"
+  ],
+  "rank": 5,
   "is_listed": true,
-  "cover_image_filename": "cover.png"
+  "cover_image_filename": "dag-pipeline.png"
 }
