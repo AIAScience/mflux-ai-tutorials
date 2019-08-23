@@ -15,7 +15,7 @@ Then, to activate your new environment, run ```conda activate ml-pipeline```.
 
 ##  Install the required packages
 
-Run ```pip install mlflow[extras]==1.1.0 mflux-ai kedro keras tensorflow```  in your terminal.
+Run ```pip install mlflow[extras]==1.1.0 mflux-ai kedro==0.15.0 keras==2.2.4 tensorflow==1.14.0```  in your terminal.
 
 ## Tutorial
 
@@ -30,7 +30,7 @@ dependencies by running ```kedro install```.
 
 ## Add datasets
 
-[Download](https://github.com/AIAScience/deep-learning-intro/tree/master/data) and and save the two json files to the ```data/01_raw/```
+[Download](https://github.com/AIAScience/deep-learning-intro/tree/master/data) and save the two json files to the ```data/01_raw/```
 folder.
 
 ## Reference all datasets
