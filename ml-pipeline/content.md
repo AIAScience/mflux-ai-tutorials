@@ -20,7 +20,9 @@ Run ```pip install mlflow[extras]==1.1.0 mflux-ai kedro keras tensorflow```  in 
 ## Tutorial
 
 In this tutorial we will create a complete machine learning pipeline using [Kedro](https://github.com/quantumblacklabs/kedro).
-We will create a pipline for the video classification problem.
+We will create a pipline for the video classification problem. The pipeline will do the data-pre-processing and model training. MFlux.ai will
+take care of the model storing and versioning.
+
 
 ## Creating the tutorial project
 
@@ -195,6 +197,9 @@ from keras.models import Sequential
 from keras.optimizers import SGD
 from sklearn.model_selection import train_test_split
 
+import mlflow
+import mlflow.keras
+import mflux_ai
 
 def split_data(x: np.array, y: np.array, parameters: Dict) -> List:
     """
@@ -234,31 +239,27 @@ def train_model(x_train: np.ndarray, y_train: np.ndarray, num_categories: int) -
 
 def evaluate_model(model: keras.models.Model, x_test: np.ndarray, y_test: np.ndarray):
     """
-    Calculate the validation accuracy and the validation loss.
+    Calculate the validation accuracy and the validation loss. Log it to MFlux.ai. Store
+    the model in MFlux.ai
     :param model: Trained model.
     :param x_test: Testing data of features.
     :param y_test: Testing data for target.
     """
+    mflux_ai.init("Your Key")
     evaluation_scores = model.evaluate(x_test, y_test)
-    logger = logging.getLogger(__name__)
     for i, metric_name in enumerate(model.metrics_names):
-        logger.info("Validation {}: {:.3f}".format(metric_name, evaluation_scores[i]))
+        mlflow.log_metric("validation_"+ str(metric_name), evaluation_scores[i])
+    mlflow.log_param("model_type", model.__class__.__name__)
+    mlflow.keras.log_model(model, "model")
 ```
+
+Remember to replace the "Your key" field with your MFlux.ai key.
 
 Add the following to ```conf/base/parameters.yml```:
 
 ```python
 test_size: 0.2
 random_state: 3
-```
-
-We will also save the trained model by adding the following to ```conf/base/catalog.yml```:
-
-```python
-model:
-  type: PickleLocalDataSet
-  filepath: data/06_models/regressor.pickle
-  versioned: true
 ```
 
 
@@ -303,42 +304,8 @@ The two pipelines are merged together in ```de_pipeline + ds_pipeline```. Both p
 ```kedro run```
 
 The de_pipeline will preprocess the data, and ds_pipeline will then create features, train and evaluate the model.
+MFlux.ai will take care of the model storing and versioning.
 
-
-
-## Log metrics and store machine learning model in MFlux.ai
-Let's log the metrics and store the model in MFlux.ai.
-
-Remove the model from the data set definition in ```conf/base/catalog.yml```.
-MFlux.ai will instead take care of the model storing and versioning.
-
-In the file ```src/ml_pipeline/nodes/video_classification.py``` add the following imports
-
-```python
-import mlflow
-import mlflow.keras
-import mflux_ai
-```
-
-In the same file replace the method ```evaluate_model()``` with this new definition:
-```python
-def evaluate_model(model: keras.models.Model, x_test: np.ndarray, y_test: np.ndarray):
-    """
-    Calculate the validation accuracy and the validation loss. Log it to MFlux.ai. Store
-    the model in MFlux.ai
-    :param model: Trained model.
-    :param x_test: Testing data of features.
-    :param y_test: Testing data for target.
-    """
-    mflux_ai.init("Your Key")
-    evaluation_scores = model.evaluate(x_test, y_test)
-    for i, metric_name in enumerate(model.metrics_names):
-        mlflow.log_metric("validation_"+ str(metric_name), evaluation_scores[i])
-    mlflow.log_param("model_type", model.__class__.__name__)
-    mlflow.keras.log_model(model, "model")
-```
-
-Remember to replace the "Your key" field with your MFlux.ai key.
 
 ## Check your tracking UI
 You should now be able to see the metric and model that you logged in your MLflow tracking UI.
