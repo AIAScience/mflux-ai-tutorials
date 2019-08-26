@@ -330,7 +330,8 @@ def evaluate_model(model: keras.models.Model, x_test: np.ndarray, y_test: np.nda
     :param x_test: Testing data of features.
     :param y_test: Testing data for target.
     """
-    mflux_ai.init("Your Key")
+    # Note: in the following line, insert the project token shown on your dashboard page.
+    mflux_ai.init("your_project_token_goes_here")
     evaluation_scores = model.evaluate(x_test, y_test)
     for i, metric_name in enumerate(model.metrics_names):
         mlflow.log_metric("validation_"+ str(metric_name), evaluation_scores[i])
