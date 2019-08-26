@@ -296,7 +296,7 @@ import mlflow.sklearn
 import mflux_ai
 
 # Note: in the following line, insert the project token shown on your dashboard page.
-mflux_ai.set_env_vars("your_project_token_goes_here")
+mflux_ai.init("your_project_token_goes_here")
 
 for i, metric_name in enumerate(model.metrics_names):
     mlflow.log_metric("validation_"+ metric_name, evaluation_scores[i])
