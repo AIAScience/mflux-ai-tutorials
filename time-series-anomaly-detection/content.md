@@ -226,8 +226,10 @@ mlflow.pyfunc.save_model(
 
 Log the metrics and store the model in MFlux.ai.
 
+```python`
 mlflow.log_metric("anomaly_ratio",anomaly_ratio)
 mlflow.log_metric("n_anomalies",n_anomalies)
 mlflow.log_metric("n_normal", n_normal)
 mlflow.pyfunc.log_model(artifact_path=mlflow_pyfunc_model_path, python_model=ProphetWrapper(), artifacts=artifacts,
     conda_env=conda_env)
+```
