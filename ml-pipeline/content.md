@@ -15,7 +15,7 @@ Then, to activate your new environment, run ```conda activate ml-pipeline```.
 
 ##  Install the required packages
 
-Run ```pip install mlflow[extras]==1.1.0 mflux-ai kedro==0.15.0 keras==2.2.4 tensorflow==1.14.0```  in your terminal.
+Run ```pip install mlflow[extras]==1.2.0 "mflux-ai>=0.3.0" kedro==0.15.0 keras==2.2.4 tensorflow==1.14```  in your terminal.
 
 ## Tutorial
 
