@@ -15,7 +15,7 @@ Then, to activate your new environment, run ```conda activate anomaly-detection`
 
 ##  Install the required packages
 
-Run ```pip install mlflow[extras]==1.2.0 "mflux-ai>=0.3.0" matplotlib==3.0  fbprophet==0.3.post2```  in your terminal.
+Run ```pip install mlflow[extras]==1.2.0 "mflux-ai>=0.3.0" matplotlib==3.0.0  fbprophet==0.3.post2 boto3==1.9.215```  in your terminal.
 
 ## Tutorial
 
@@ -223,13 +223,13 @@ mlflow.pyfunc.save_model(
     path=mlflow_pyfunc_model_path, python_model=ProphetWrapper(), artifacts=artifacts,
     conda_env=conda_env)
 ```
-Load the model in ```python_function``` format.
+
+Log the metrics and store the model in MFlux.ai.
 
 ```python
-loaded_model = mlflow.pyfunc.load_model(mlflow_pyfunc_model_path)
-```
-
-Do anomaly predictions.
-```python
-predictions = loaded_model.predict(pd.DataFrame(daily))
+mlflow.log_metric("anomaly_ratio",anomaly_ratio)
+mlflow.log_metric("n_anomalies",n_anomalies)
+mlflow.log_metric("n_normal", n_normal)
+mlflow.pyfunc.log_model(artifact_path=mlflow_pyfunc_model_path, python_model=ProphetWrapper(), artifacts=artifacts,
+    conda_env=conda_env)
 ```
