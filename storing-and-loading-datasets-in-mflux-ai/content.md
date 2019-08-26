@@ -12,7 +12,7 @@ enterprise-grade Amazon S3-compatible Object Storage system.
 import mflux_ai
 
 # Note: in the following line, insert the project token shown on your dashboard page.
-mflux.set_env_vars("your_project_token_goes_here")
+mflux.init("your_project_token_goes_here")
 
 # Generate some dummy data (a numpy array)
 my_dataset = np.zeros(shape=(10000, 100), dtype=np.float32)
@@ -34,7 +34,7 @@ doing that:
 import mflux_ai
 
 # Note: in the following line, insert the project token shown on your dashboard page.
-mflux.set_env_vars("your_project_token_goes_here")
+mflux.init("your_project_token_goes_here")
 
 object_name = "my-dataset.pkl"
 my_loaded_dataset = mflux_ai.get_dataset(object_name)

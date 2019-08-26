@@ -131,8 +131,10 @@ print('Test accuracy:', score[1])
 Let's log the parameters, validation loss and accuracy metric and store the model in MFlux.ai
 
  ```python
+import mflux_ai
 
-mflux_ai.set_env_vars("Your_key")
+# Note: in the following line, insert the project token shown on your dashboard page.
+mflux_ai.init("your_project_token_goes_here")
 
 mlflow.log_param("batch_size", batch_size)
 mlflow.log_param("nb_epochs", nb_epochs)
