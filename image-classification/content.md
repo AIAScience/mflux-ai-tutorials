@@ -1,8 +1,6 @@
 # Image classification
 
-This tutorial shows how you can train a image classification model. We will develop a Convolutional Neural Network (CNN) for the classification. We use the MNIST dataset which is an image dataset of handwritten digits. It has has 60,000 training images and 10,000 test images, each of which are grayscale 28 x 28 sized images.
-
-## Log in to MFlux.ai
+This tutorial shows how you can train an image classification model. We will develop a Convolutional Neural Network (CNN) for the classification. We use the MNIST dataset which is an image dataset of handwritten digits. It has has 60,000 training images and 10,000 test images, each of which are grayscale 28 x 28 sized images.
 
 ## Install Anaconda on your computer
 
@@ -83,7 +81,6 @@ y_test = keras.utils.to_categorical(y_test, num_classes)
 ## Define and train a CNN model
 Define a CNN model
  ```python
-        # Define model architecture
 model = Sequential()
 
 model.add(Convolution2D(32, 3, 3, activation='relu', input_shape=input_shape))
@@ -131,7 +128,6 @@ print('Test accuracy:', score[1])
 Let's log the parameters, validation loss and accuracy metric and store the model in MFlux.ai
 
  ```python
-import mflux_ai
 
 # Note: in the following line, insert the project token shown on your dashboard page.
 mflux_ai.init("your_project_token_goes_here")
