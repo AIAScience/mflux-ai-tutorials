@@ -218,6 +218,11 @@ conda_env = {
 Save the MLflow model.
 
 ```python
+import mflux_ai
+
+# Note: in the following line, insert the project token shown on your dashboard page.
+mflux_ai.init("your_project_token_goes_here")
+
 mlflow_pyfunc_model_path = "prophet_mlflow_pyfunc"
 mlflow.pyfunc.save_model(
     path=mlflow_pyfunc_model_path, python_model=ProphetWrapper(), artifacts=artifacts,
