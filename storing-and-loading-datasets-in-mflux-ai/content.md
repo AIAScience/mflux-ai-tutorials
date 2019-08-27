@@ -8,7 +8,7 @@ enterprise-grade Amazon S3-compatible Object Storage system.
 
 # Store a dataset
 
-```
+```python
 import mflux_ai
 
 # Note: in the following line, insert the project token shown on your dashboard page.
@@ -30,7 +30,7 @@ When you run the script above successfully, it should output `Dataset uploaded!`
 Assuming you want to load the dataset that you uploaded in the previous script, here's code for
 doing that:
 
-```
+```python
 import mflux_ai
 
 # Note: in the following line, insert the project token shown on your dashboard page.
