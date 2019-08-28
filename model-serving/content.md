@@ -43,10 +43,9 @@ model = DecisionTreeClassifier()
 model.fit(input_data, target_data)
 with open('model.pkl', 'wb') as pickle_file:
     pickle.dump(model, pickle_file)
-
 ```
 
-Now, run this file: ```python build_model.py```
+Now, run this file to train and save the model: ```python build_model.py```.
 
 ## Defining the REST API
 
@@ -86,8 +85,77 @@ if __name__ == "__main__":
     app.run()
 ```
 
+Let's go through the code. The first code snippet imports the packages and initalizes the Flask application
+
+
+```python
+import numpy as np
+import pickle
+from flask import Flask, request, send_from_directory
+
+from flask import jsonify
+
+app = Flask(__name__)
+```
+
+
+Next, we have a method for loading our trained model.
+```python
+def load_model():
+    with open('model.pkl', 'rb') as f:
+        model = pickle.load(f)
+    return model
+```
+
+
+We define the ```predict```function which processes any requests to
+the ```/predict/``` endpoint.
+```python
+@app.route("/predict/", methods=['POST'])
+def predict():
+    response = {"success": False}
+    if request.method == "POST":
+        if request.data:
+            data = request.get_json()['data']
+            predictions = model.predict(np.asarray(data))
+            response["success"] = True
+            response["predictions"] = predictions.tolist()
+
+    return jsonify(response)
+
+```
+The function takes the incoming data and feeds its into the model. It
+then returns the predictions to the client in JSON format.
+
+
+```python
+if __name__ == "__main__":
+    model = load_model()
+    app.run()
+```
+
+The main method loads the model and launches the app.
+
+## Start the API
+
+Run ``python app.y```
+
+
+
+
 
 
 ### Using cURL to test the REST API
+You can test the API by using cURL.
 
-```curl localhost:5000/predict/ -d '{"data": [[5.1, 3.5, 1.4, 0.2], [3.1, 3.5, 1.4, 0.2]]}' -H 'Content-Type: application/json' ```
+Run ```curl localhost:5000/predict/ -d '{"data": [[5.1, 3.5, 1.4, 0.2], [3.1 3.5, 1.4, 0.2]]}' -H 'Content-Type: application/json' ```
+You will then recieve a json with the predictions:
+
+```{
+  "predictions": [
+    0,
+    0
+  ],
+  "success": true
+}
+```

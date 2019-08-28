@@ -7,7 +7,7 @@
     "flask",
     "scikit-learn",
     "classification",
-    "mode-serving",
+    "mode-serving"
   ],
   "rank": 5,
   "is_listed": true,
