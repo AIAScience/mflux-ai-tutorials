@@ -148,9 +148,8 @@ Run ```python app.py```
 ### Using cURL to test the REST API
 You can test the API by using cURL.
 
-Run ```curl localhost:5000/predict/ -d '{"data": [[5.1, 3.5, 1.4, 0.2], [3.1 3.5, 1.4, 0.2]]}' -H 'Content-Type: application/json' ```
-You will then recieve a json with the predictions:
-
+Run ```curl localhost:5000/predict/ -d '{"data": [[5.1, 3.5, 1.4, 0.2], [3.1 3.5, 1.4, 0.2]]}' -H 'Content-Type: application/json' ``` in the terminal.
+You will then receive a json with the predictions:
 ```
 {
   "predictions": [
