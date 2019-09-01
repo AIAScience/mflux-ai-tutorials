@@ -17,7 +17,7 @@ Then, to activate your new environment, run ```conda activate image-classificati
 
 ##  Install the required packages
 
-Run ```pip install mlflow[extras]==1.2.0 "mflux-ai>=0.3.0" Keras==2.2```  in your terminal.
+Run ```pip install mlflow[extras]==1.2.0 "mflux-ai>=0.4.0" Keras==2.2```  in your terminal.
 
 
 ## Loading imports
