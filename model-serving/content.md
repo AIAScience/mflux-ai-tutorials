@@ -1,6 +1,10 @@
 # Model serving
 
 
+## Install Docker on you computer
+
+Install Docker from https://docs.docker.com/install/
+
 ## Install Anaconda on your computer
 
 Download and install Anaconda. Select the Python 3.* version):
@@ -9,24 +13,27 @@ https://www.anaconda.com/download/
 When Anaconda is installed, open "Anaconda Prompt" or any other terminal where you have ```conda``` available now.
 
 ## Make an isolated Python environment
-Run ```conda create --name ml-pipeline python=3.5``` in your terminal.
-Then, to activate your new environment, run ```conda activate ml-pipeline```.
+Run ```conda create --name model-serving python=3.5``` in your terminal.
+Then, to activate your new environment, run ```conda activate model-serving```.
 
 
 ##  Install the required packages
 
-Run ```pip install mlflow[extras]==1.2.0 "mflux-ai>=0.3.0" kedro==0.15.0 keras==2.2.4 tensorflow==1.14```  in your terminal.
+Run ```pip install mlflow[extras]==1.2.0 "mflux-ai>=0.3.0"```  in your terminal.
+
 
 ## Tutorial
 
-In this tutorial we will deploy a machine learning model as a REST API using Flask RESTful
+In this tutorial we will deploy a machine learning model as a REST API using Flask in a [Docker](https://www.docker.com/) container.
 
 ### Train and save a model
 
 We train and save a decision tree classifier on the [Iris](https://en.wikipedia.org/wiki/Iris_flower_data_set) data set.
-Create a file build_model.py and paste the following code:
+The model wil be stored in MFlux.ai
+Create a file train_model.py and paste the following code:
 
 ```python
+import mflux_ai
 import mlflow.sklearn
 import os
 import pickle
@@ -35,76 +42,80 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 
 iris = datasets.load_iris()
-
 input_data = iris["data"]
 target_data = iris["target"]
-
 model = DecisionTreeClassifier()
 model.fit(input_data, target_data)
-with open('model.pkl', 'wb') as pickle_file:
-    pickle.dump(model, pickle_file)
+
+# Note: in the following line, insert the project token shown on your dashboard page.
+mflux_ai.init("your_project_token_goes_here")
+mlflow.sklearn.log_model(model, "model")
+
 ```
 
-Now, run this file to train and save the model: ```python build_model.py```.
+Now, run this file: ```python train_model.py```.
 
-## Defining the REST API
+### Defining the REST API
 
-Create a file app.py and paste the following code:
+Create a file app.py inside a folder named ```app`` and paste the following code:
 
 ```python
+import mflux_ai
+import mlflow.sklearn
 import numpy as np
 import pickle
 from flask import Flask, request, send_from_directory
-
 from flask import jsonify
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="app")
+
+# Note: in the following line, insert the project token shown on your dashboard page.
+mflux_ai.init("your_project_token_goes_here")
+
+model = mlflow.sklearn.load_model(
+    "s3://mlflow/0/RUN_ID_GOES_HERE/artifacts/model"
+)
 
 
-def load_model():
-    with open('model.pkl', 'rb') as f:
-        model = pickle.load(f)
-    return model
-
-
-@app.route("/predict/", methods=['Get', 'POST'])
+@app.route("/predict/", methods=['POST'])
 def predict():
     response = {"success": False}
     if request.method == "POST":
         if request.data:
-            data = request.get_json()['data']
+            data = request.json.get('data')
             predictions = model.predict(np.asarray(data))
             response["success"] = True
             response["predictions"] = predictions.tolist()
 
     return jsonify(response)
 
-
-if __name__ == "__main__":
-    model = load_model()
-    app.run()
 ```
+
+In ```app.py```, replace ```RUN_ID_GOES_HERE``` with the actual run id that you found in the model tracking UI.
 
 Let's go through the code. The first code snippet imports the packages and initalizes the Flask application
 
 
 ```python
+import mflux_ai
+import mlflow.sklearn
 import numpy as np
 import pickle
 from flask import Flask, request, send_from_directory
-
 from flask import jsonify
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="app")
 ```
 
 
-Next, we have a method for loading our trained model.
+Next, we load our trained model from MFlux.ai.
 ```python
-def load_model():
-    with open('model.pkl', 'rb') as f:
-        model = pickle.load(f)
-    return model
+# Note: in the following line, insert the project token shown on your dashboard page.
+mflux_ai.init("your_project_token_goes_here")
+
+model = mlflow.sklearn.load_model(
+    "s3://mlflow/0/RUN_ID_GOES_HERE/artifacts/model"
+)
 ```
 
 
@@ -116,39 +127,72 @@ def predict():
     response = {"success": False}
     if request.method == "POST":
         if request.data:
-            data = request.get_json()['data']
+            data = request.json.get('data')
             predictions = model.predict(np.asarray(data))
             response["success"] = True
             response["predictions"] = predictions.tolist()
 
     return jsonify(response)
-
 ```
 The function takes the incoming data and feeds its into the model. It
 then returns the predictions to the client in JSON format.
 
 
-```python
-if __name__ == "__main__":
-    model = load_model()
-    app.run()
+### Dockerfile
+
+Make a ```Dockerfile``` and paste the following code:
+```Dockerfile
+FROM continuumio/miniconda3:4.6.14
+
+RUN pip install pyuwsgi==2.0.18
+
+RUN mkdir /app/
+WORKDIR /app
+
+COPY ./requirements.txt /app/requirements.txt
+RUN pip install -r requirements.txt
+COPY . /app
+
+ENTRYPOINT ["pyuwsgi", "--http", ":5000", "--wsgi-file", "app/app.py", "--callable", "app", "--enable-threads"]
 ```
 
-The main method loads the model and launches the app.
+### Requirements
 
-## Start the API
+Make a  ```requirements.txt``` file to install the required packages. Paste the following code in the file:
 
-Run ```python app.py```
+```
+mlflow==1.2.0
+mflux-ai>=0.4.0
+boto3==1.9.215
+minio==4.0.20
+scikit-learn==0.21.3
+```
+
+### Directory structure
+
+The directory structure should be like this:
+
+```
+-/model-serving/
+      -Dockerfile
+      -requirements.txt
+      -/app/
+          -app.py
+```
+
+### Build the docker image
+
+Run ```docker build -t model-serving .```
+
+### Launch a docker container
+
+Run ```docker run -p 5000:5000 model-server``
 
 
-
-
-
-
-### Using cURL to test the REST API
+### Make requests to the API
 You can test the API by using cURL.
 
-Run ```curl localhost:5000/predict/ -d '{"data": [[5.1, 3.5, 1.4, 0.2], [3.1 3.5, 1.4, 0.2]]}' -H 'Content-Type: application/json' ``` in the terminal.
+Run ```curl http://0.0.0.0:5000/predict/ -d '{"data": [[5.1, 3.5, 1.4, 0.2], [3.1,  3.5, 1.4, 0.2]]}' -H 'Content-Type: application/json' ``` in the terminal.
 You will then receive a json with the predictions:
 ```
 {
@@ -159,3 +203,18 @@ You will then receive a json with the predictions:
   "success": true
 }
 ```
+
+You can also test it using python:
+```python
+import requests
+import numpy as np
+url= 'http://0.0.0.0:5000/predict/'
+data ={'data': [[5.1, 3.5, 1.4, 0.2], [3.1, 3.5, 1.4, 0.2]]}
+response = requests.post(url, json = data)
+response.json()
+```
+
+
+## Serve model using MFlux.ai
+
+
