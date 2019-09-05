@@ -57,7 +57,7 @@ Now, run this file: ```python train_model.py```.
 
 ### Defining the REST API
 
-Create a file app.py inside a folder named ```app`` and paste the following code:
+Create a file app.py inside a folder named ```app``` and paste the following code:
 
 ```python
 import mflux_ai
@@ -186,13 +186,15 @@ Run ```docker build -t model-serving .```
 
 ### Launch a docker container
 
-Run ```docker run -p 5000:5000 model-server``
+Run ```docker run -p 5000:5000 model-server```
 
 
 ### Make requests to the API
 You can test the API by using cURL.
 
-Run ```curl http://0.0.0.0:5000/predict/ -d '{"data": [[5.1, 3.5, 1.4, 0.2], [3.1,  3.5, 1.4, 0.2]]}' -H 'Content-Type: application/json' ``` in the terminal.
+Run
+```curl http://0.0.0.0:5000/predict/ -d '{"data": [[5.1, 3.5, 1.4, 0.2], [3.1,  3.5, 1.4, 0.2]]}' -H 'Content-Type: application/json'```
+in the terminal.
 You will then receive a json with the predictions:
 ```
 {
@@ -204,7 +206,7 @@ You will then receive a json with the predictions:
 }
 ```
 
-You can also test it using python:
+You can also make requests using python:
 ```python
 import requests
 import numpy as np
