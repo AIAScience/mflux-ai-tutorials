@@ -148,8 +148,6 @@ from ml_pipeline.nodes.data_engineering import (
 extract_num_categories,
 )
 
-from ml_pipeline.nodes.video_classification import split_data, train_model, evaluate_model
-
 
 def create_pipeline(**kwargs):
     """Create the project's pipeline.
@@ -262,9 +260,19 @@ model:
 ```
 
 
-We can now create a pipeline for training and validating a classification model by updating the ```create_pipeline()```:
+We can now create a pipeline for training and validating a classification model by updating ```pipeline.py```:
 
 ```python
+from kedro.pipeline import node, Pipeline
+from ml_pipeline.nodes.data_engineering import (
+    create_video_features,
+    create_video_targets,
+extract_num_categories,
+)
+
+from ml_pipeline.nodes.video_classification import split_data, train_model, evaluate_model
+
+
 def create_pipeline(**kwargs):
     """Create the project's pipeline.
 
