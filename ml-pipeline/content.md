@@ -22,7 +22,7 @@ Run ```pip install mlflow[extras]==1.1.0 mflux-ai kedro==0.15.0 keras==2.2.4 ten
 In this tutorial we will create a complete machine learning pipeline using [Kedro](https://github.com/quantumblacklabs/kedro).
 We will create a pipline for the video classification problem.
 
-## Advangages of Kedro
+## Why Kedro?
 
 The main advantage of Kedro compared to competitors like Azure and AWS is that it is easy and fast to go from an experimentation stage to production.
 
