@@ -191,7 +191,7 @@ Run ```docker build -t model-serving .```
 
 #### Launch a docker container
 
-Run ```docker run -p 5000:5000 model-server```
+Run ```docker run -p 5000:5000 model-serving```
 
 
 #### Make requests to the API
@@ -268,13 +268,13 @@ Launch a docker container by running
 
 You can test the API by using cURL.
 
-Run
-```curl http://0.0.0.0:9000/invocations -H 'Content-Type: application/json' -d '{
+Run the following command in the terminal:
+```
+curl http://0.0.0.0:9000/invocations -H 'Content-Type: application/json' -d '{
     "columns": ["feature_1", "feature_2", "feature_3", "feature_4"],
     "data": [[5.1, 3.5, 1.4, 0.2], [3.1, 3.5, 1.4, 0.2]]
 }'
 ```
-in the terminal.
 
 
 You can also make requests using python:
