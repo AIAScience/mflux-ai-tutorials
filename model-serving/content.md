@@ -19,7 +19,7 @@ Then, to activate your new environment, run ```conda activate model-serving```.
 
 ##  Install the required packages
 
-Run ```pip install mlflow[extras]==1.2.0 "mflux-ai>=0.3.0"```  in your terminal.
+Run ```pip install mlflow[extras]==1.2.0 "mflux-ai>=0.4.0"```  in your terminal.
 
 
 ## Tutorial
@@ -27,7 +27,7 @@ Run ```pip install mlflow[extras]==1.2.0 "mflux-ai>=0.3.0"```  in your terminal.
 In this tutorial we will deploy a machine learning model as a REST API using two approaches:
 
 * Using Flask
-* Using MLFlow's build in functionality.
+* Using MLFlow's build-in functionality.
 
 In both approaches we will deploy it using  a [Docker](https://www.docker.com/) container.
 
@@ -69,10 +69,10 @@ import mflux_ai
 import mlflow.sklearn
 import numpy as np
 import pickle
-from flask import Flask, request, send_from_directory
+from flask import Flask, request
 from flask import jsonify
 
-app = Flask(__name__, static_folder="app")
+app = Flask(__name__)
 
 # Note: in the following line, insert the project token shown on your dashboard page.
 mflux_ai.init("your_project_token_goes_here")
@@ -109,7 +109,7 @@ import pickle
 from flask import Flask, request, send_from_directory
 from flask import jsonify
 
-app = Flask(__name__, static_folder="app")
+app = Flask(__name__)
 ```
 
 

@@ -7,11 +7,11 @@
     "flask",
     "scikit-learn",
     "classification",
-    "mode-serving",
+    "model-serving",
     "mlflow",
     "docker"
   ],
   "rank": 5,
   "is_listed": true,
-  "cover_image_filename": "model_serving.png"
+  "cover_image_filename": "model_serving.jpeg"
 }
