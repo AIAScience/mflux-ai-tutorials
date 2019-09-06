@@ -1,0 +1,17 @@
+{
+  "title": "Model serving",
+  "short_description": "Build a REST API for serving a machine learning model.",
+  "tags": [
+    "rest",
+    "api",
+    "flask",
+    "scikit-learn",
+    "classification",
+    "model-serving",
+    "mlflow",
+    "docker"
+  ],
+  "rank": 5,
+  "is_listed": true,
+  "cover_image_filename": "model_serving.jpeg"
+}
