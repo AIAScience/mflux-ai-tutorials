@@ -22,10 +22,20 @@ Run ```pip install mlflow[extras]==1.1.0 mflux-ai kedro==0.15.0 keras==2.2.4 ten
 In this tutorial we will create a complete machine learning pipeline using [Kedro](https://github.com/quantumblacklabs/kedro).
 We will create a pipline for the video classification problem.
 
+## Advangages of Kedro
+
+The main advantage of Kedro compared to competitors like Azure and AWS is that it is easy and fast to go from an experimentation stage to production.
+
+* It uses Python functions for defining the logic and steps in the pipeline.
+
+* It does not need a scheduler or database to set up a pipeline.
+
+* It starts with a project template, making it easy to set up and collaborate on a data science project.
+
 ## Creating the tutorial project
 
-Run ```kedro new``` to create a new empty template project. Call the project ml-pipeline. Choose ```n``` to
-create a project template without a dummy dataset example. Within your project's root directory, install project
+Run ```kedro new``` to create a new empty template project. Call the project ```ml-pipeline```. Choose ```n``` to
+create a project template without a dummy dataset example. ```cd``` into the ```ml-pipeline```  directory. Within this directory, install project
 dependencies by running ```kedro install```.
 
 ## Add datasets
@@ -176,7 +186,17 @@ def create_pipeline(**kwargs):
 
 This pipeline will extract feature and target vectors from the data and also extract the number of categories.
 If you want any of this data to persist after the pipeline is finished running you can add them in the
-```conf/base/catalog.yml```.
+```conf/base/catalog.yml``` by adding the following code to it:
+
+```yaml
+features:
+  type: PickleLocalDataSet
+  filepath: data/02_intermediate/features.pkl
+
+targets:
+  type: PickleLocalDataSet
+  filepath: data/02_intermediate/targets.pkl
+```
 
 ### Creating the data science pipeline
 
