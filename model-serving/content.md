@@ -27,7 +27,7 @@ Run ```pip install mlflow[extras]==1.2.0 "mflux-ai>=0.4.0"```  in your terminal.
 In this tutorial we will deploy a machine learning model as a REST API using two approaches:
 
 * Using Flask
-* Using MLFlow's build-in functionality.
+* Using MLFlow's built-in functionality.
 
 In both approaches we will deploy it using  a [Docker](https://www.docker.com/) container.
 
