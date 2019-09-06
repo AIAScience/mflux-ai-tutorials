@@ -139,7 +139,7 @@ def predict():
 
     return jsonify(response)
 ```
-The function takes the incoming data and feeds its into the model. It
+The function takes the incoming data and feeds it into the model. It
 then returns the predictions to the client in JSON format.
 
 
