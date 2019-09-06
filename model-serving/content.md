@@ -24,7 +24,12 @@ Run ```pip install mlflow[extras]==1.2.0 "mflux-ai>=0.3.0"```  in your terminal.
 
 ## Tutorial
 
-In this tutorial we will deploy a machine learning model as a REST API using Flask in a [Docker](https://www.docker.com/) container.
+In this tutorial we will deploy a machine learning model as a REST API using two approaches:
+
+* Using Flask
+* Using MLFlow's build in functionality.
+
+In both approaches we will deploy it using  a [Docker](https://www.docker.com/) container.
 
 ### Train and save a model
 
@@ -55,7 +60,7 @@ mlflow.sklearn.log_model(model, "model")
 
 Now, run this file: ```python train_model.py```.
 
-### Defining the REST API
+### REST API with Flask
 
 Create a file app.py inside a folder named ```app``` and paste the following code:
 
@@ -138,7 +143,7 @@ The function takes the incoming data and feeds its into the model. It
 then returns the predictions to the client in JSON format.
 
 
-### Dockerfile
+#### Dockerfile
 
 Make a ```Dockerfile``` and paste the following code:
 ```Dockerfile
@@ -156,7 +161,7 @@ COPY . /app
 ENTRYPOINT ["pyuwsgi", "--http", ":5000", "--wsgi-file", "app/app.py", "--callable", "app", "--enable-threads"]
 ```
 
-### Requirements
+#### Requirements
 
 Make a  ```requirements.txt``` file to install the required packages. Paste the following code in the file:
 
@@ -168,7 +173,7 @@ minio==4.0.20
 scikit-learn==0.21.3
 ```
 
-### Directory structure
+#### Directory structure
 
 The directory structure should be like this:
 
@@ -180,16 +185,16 @@ The directory structure should be like this:
           -app.py
 ```
 
-### Build the docker image
+#### Build the docker image
 
 Run ```docker build -t model-serving .```
 
-### Launch a docker container
+#### Launch a docker container
 
 Run ```docker run -p 5000:5000 model-server```
 
 
-### Make requests to the API
+#### Make requests to the API
 You can test the API by using cURL.
 
 Run
@@ -217,8 +222,8 @@ response.json()
 ```
 
 
-## Serve model with MLFlow
-Instead of building a flask app, we can deploy the model as REST API server using MLFlow. The command  ```mlflow models serve -m  model-uri -p port  -h host``` will
+### Serve model with MLFlow
+Instead of building a flask app, we can deploy the model as a REST API server using MLFlow. The command  ```mlflow models serve -m  model-uri -p port  -h host``` will
 serve a model as a REST API.  We will run this command inside a docker container.
 
 Make a file called serve.py and paste the following in the file:
@@ -259,7 +264,7 @@ Launch a docker container by running
 ```docker run -p 9000:9000 model-server```
 
 
-### Make requests to the API
+#### Make requests to the API
 
 You can test the API by using cURL.
 
@@ -272,7 +277,7 @@ Run
 in the terminal.
 
 
-You can also make requests using python
+You can also make requests using python:
 
 ```python
 import requests
