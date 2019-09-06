@@ -34,7 +34,7 @@ In both approaches we will deploy it using  a [Docker](https://www.docker.com/) 
 ### Train and save a model
 
 We train and save a decision tree classifier on the [Iris](https://en.wikipedia.org/wiki/Iris_flower_data_set) data set.
-The model wil be stored in MFlux.ai
+The model wil be stored in MFlux.ai.
 Create a file train_model.py and paste the following code:
 
 ```python
