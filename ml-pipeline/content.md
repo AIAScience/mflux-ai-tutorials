@@ -24,13 +24,15 @@ We will create a pipline for the video classification problem.
 
 ## Why Kedro?
 
-The main advantage of Kedro compared to competitors like Azure and AWS is that it is easy and fast to go from an experimentation stage to production.
+The main advantage of Kedro compared to competitors like Azure Data Factory and Amazon Web Services is that it is easy and fast to go from an experimentation stage to production.
 
 * It uses Python functions for defining the logic and steps in the pipeline.
 
 * It does not need a scheduler or database to set up a pipeline.
 
 * It starts with a project template, making it easy to set up and collaborate on a data science project.
+
+* There is no vender lock-in. It can be deployed on a laptop or in a cloud provider of choice.
 
 ## Creating the tutorial project
 
