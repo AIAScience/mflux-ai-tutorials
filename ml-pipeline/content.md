@@ -32,7 +32,7 @@ The main advantage of Kedro compared to competitors like Azure Data Factory and 
 
 * It starts with a project template, making it easy to set up and collaborate on a data science project.
 
-* There is no vender lock-in. It can be deployed on a laptop or in a cloud provider of choice.
+* There is no vender lock-in, it can be deployed e.g. a laptop or in a cloud provider of choice.
 
 ## Creating the tutorial project
 
