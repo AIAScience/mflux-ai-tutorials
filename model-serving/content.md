@@ -19,7 +19,7 @@ Then, to activate your new environment, run ```conda activate model-serving```.
 
 ##  Install the required packages
 
-Run ```pip install mlflow[extras]==1.2.0 "mflux-ai>=0.4.0"```  in your terminal.
+Run ```pip install mlflow[extras]==1.2.0 "mflux-ai>=0.5.1"```  in your terminal.
 
 
 ## Tutorial
@@ -248,7 +248,7 @@ RUN echo "source activate env" > ~/.bashrc
 ENV PATH /opt/conda/envs/env/bin:$PATH
 RUN conda config --append channels conda-forge
 RUN conda install --yes scikit-learn==0.21.3
-RUN pip install --no-cache-dir mlflow==1.2.0 minio==4.0.20 boto3==1.9.215 mflux-ai>=0.4.0
+RUN pip install --no-cache-dir mlflow==1.2.0 minio==4.0.20 boto3==1.9.215 mflux-ai>=0.5.1
 RUN mkdir /model-serving/
 WORKDIR /model-serving/
 COPY serve.py /model-serving/serve.py

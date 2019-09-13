@@ -19,7 +19,7 @@ When you're ready, move on to the tutorial:
 
 Run the following command in the terminal to install MLflow and MFlux.ai.
 
-```pip install mlflow[extra]==1.2.0 "mflux-ai>=0.4.0"```
+```pip install mlflow[extra]==1.2.0 "mflux-ai>=0.5.1"```
 
 
 
