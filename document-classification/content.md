@@ -17,9 +17,9 @@ When you're ready, move on to the tutorial:
 
 # Install MLflow
 
-Run the following command in the terminal to install MLflow and MFlux.ai.
+Run the following command in the terminal to install dependencies like MLflow and MFlux.ai.
 
-```pip install mlflow[extra]==1.2.0 "mflux-ai>=0.5.1"```
+```pip install mlflow[extra]==1.2.0 "mflux-ai>=0.5.1" tqdm```
 
 
 
@@ -284,16 +284,16 @@ Let's log those four metric series and store the model in MFlux.ai:
 ```python
 import mlflow.keras
 import mflux_ai
+from tqdm import tqdm
 
 # Note: in the following line, insert the project token shown on your dashboard page.
 mflux_ai.init("your_project_token_goes_here")
 
-print("Logging metrics...")
-for metric_name in history.history:
-    for i in range(len(history.history[metric_name])):
-        mlflow.log_metric(
-            key=metric_name, value=history.history[metric_name][i], step=i
-        )
+for i in tqdm(history.epoch, desc="Logging metrics"):
+    metrics = {}
+    for metric_name in history.history:
+        metrics[metric_name] = history.history[metric_name][i]
+    mlflow.log_metrics(metrics, step=i)
 
 mlflow.keras.log_model(model, "model")
 ```
