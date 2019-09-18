@@ -9,7 +9,7 @@ an Nvidia graphics card. Everything in this tutorial can still be done without i
 20 times slower). If doing this without CUDA, make sure to replace the CuDNNLSTM layers with regular LSTM. Guides for installing 
 CUDA can be [found here](https://docs.nvidia.com/cuda/index.html).
 
-Download [Anaconda](https://www.anaconda.com/distribution/) for Python 3 if you dont have it. Anaconda lets us set an environment for 
+Download [Anaconda](https://www.anaconda.com/distribution/) for Python 3 if you dont have it. Anaconda let's us set an environment for 
 the project that uses specific versions of our dependencies, even if we have other versions of that software elsewhere.
 
 Make a folder called `boston_crime` and in it a file called `environment.yml`. These are the dependencis 
@@ -258,7 +258,7 @@ For instance, the chart for total crime per hour looks like this
 We can exchange the column "Hour" for "Weekday", "Monthday" or "Month" to investigate these relationships. The cutoff deciding 
 what crimes to look at can be adjusted and, with slightly more effort, the list of crimes to consider can also be altered.
 
-The following code lets us look for correlations between crime and weather.
+The following code let's us look for correlations between crime and weather.
 
 Feel free to inspect the functions, but the important utility is in the three loops towards the end. The first loop checks 
 a list of weather categories against one particular category. The `batch size` is how many datapoints we group together and treat 
@@ -515,7 +515,7 @@ y_test = x_test[:, 1:, target_pos:target_pos + 1]
 x_test = x_test[:, :-1]
 ```
 
-We create a function that lets us easily build various networks with keras:
+We create a function that let's us easily build various networks with keras:
 ```python
 def make_model(layers):
     optimizer = Adam(lr=0.002)
@@ -619,7 +619,7 @@ for index, row in runs.iterrows():
 models_sorted.sort()
 ```
 
-We need something to rate our predictions against. Lets make some simple models of prediction. You may want to delete or 
+We need something to rate our predictions against. Let's make some simple models of prediction. You may want to delete or 
 comment out these print statements after observing them.
 ```python
 # prepare simple forecating schemes
@@ -644,7 +644,7 @@ combo1 = combine_predictions([avg, repeat_week, repeat_day], [0.3, 0.4, 0.3])
 print(MSE(combo1, test_target))
 ```
 
-Lets plot our best model vs reality vs our simple prediction
+Let's plot our best model vs reality vs our simple prediction
 ```python
 # plot reality (red), our best model (green) and our best simple prediction (blue)
 model = mlflow.sklearn.load_model(models_sorted[0][1][3] + "/model")
@@ -657,7 +657,7 @@ pyplot.plot(combo1[-plot_points:], color='blue')
 pyplot.show()
 ```
 
-And now lets investigate the best few models. Note that the score on the current test data is slightly different from the
+And now let's investigate the best few models. Note that the score on the current test data is slightly different from the
 logged score. We may have been lucky with the testset being particularly agreeable in some cases.
 ```python
 # investigate the best few models
