@@ -1,0 +1,8 @@
+{
+  "title": "Mflux and mlflow cheat sheet",
+  "short_description": "The most used commands on one page",
+  "tags": ["cheat sheet", "commands", "mlflow"],
+  "rank": 5,
+  "is_listed": true,
+  "cover_image_filename": "cheat_sheet_cover.png"
+}

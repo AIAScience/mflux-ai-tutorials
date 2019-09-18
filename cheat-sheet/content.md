@@ -1,0 +1,1 @@
+![The cheat sheet should be here](images/cheat_sheet.png)
