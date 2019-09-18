@@ -4,5 +4,5 @@
   "tags": ["EDA", "keras", "analysis", "forecasting", "RNN"],
   "rank": 7,
   "is_listed": true,
-  "cover_image_filename": "images/total_crime_by_hour.png"
+  "cover_image_filename": "boston_crime_forecasting_cover.png"
 }
