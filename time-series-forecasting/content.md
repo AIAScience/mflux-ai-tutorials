@@ -70,7 +70,7 @@ python tutorial.py
 showing what X looks like without the time index
 
 Now we want to split the data into a training set and a test set. For a time series,
-the test set will be the last part of the series. Lets make a variable to control where to split the data,
+the test set will be the last part of the series. Let's make a variable to control where to split the data,
 and then split it
 ```python
 test_n = 500
@@ -78,7 +78,7 @@ train = X[:-test_n]
 test = X[-test_n:]
 ```
 
-Lets add a variable to control how many steps ahead we are to forecast.
+Let's add a variable to control how many steps ahead we are to forecast.
 ```python
 forecast_steps = 10
 ```
@@ -99,7 +99,7 @@ def naive_forecast(history):
     return predictions
 ```
 
-Now, lets run a naive forecast and inspect it.
+Now, let's run a naive forecast and inspect it.
 We will want pyplot to visualise the output and use mean squared error (MSE) as a measure of accuracy.
 ```python
 from matplotlib import pyplot
@@ -121,7 +121,7 @@ we should get and MSE of 1023 and this plot
 
 ![forecast plotted vs actual data](images/SS_naive_500_10.png)
 
-Now, lets add a simple AR-model (autoregression) to forecast our series.
+Now, let's add a simple AR-model (autoregression) to forecast our series.
 ```python
 from statsmodels.tsa.ar_model import AR
 ```
@@ -145,11 +145,11 @@ def AR_forecast(history):
     return predictions, model
 ```
 
-Lets go through it. The history variable starts as the training data, but as we make predictions and move forward in time,
+Let's go through it. The history variable starts as the training data, but as we make predictions and move forward in time,
 it will get appended with data from the test data that has "just become available" to us.
 The predictions variable will store all our predictions.
 
-We specify that we are using the AR model on the training data and fit it. The variable coefs holds the 
+We specify that we are using the AR model on the training data and fit it. The variable coefs hold the 
 coefficients calculated by the model.
 These are weights to be applied to the last few elements of our time series in order to forecast the next 
 element
@@ -159,7 +159,7 @@ model_fit = model.fit()
 coefs = model_fit.params
 ```
 
-We have chosen to do one forecast every few steps, and no forcasting in between.
+We have chosen to do one forecast every few steps, and no forecasting in between.
 Here we loop over the relevant time steps to do forecasting. In order to forecast more than one step,
 we will use the output of one forecast as input for the next one.
 Because we will be appending forecasts to the actual historical data, we make an other variable for this.
