@@ -18,20 +18,20 @@ we will require, paste this into the environment file:
 name: boston
 dependencies:
   - python=3.6.6
-  - numpy=1.16.4
-  - tensorflow-gpu=1.14.0
-  - matplotlib=3.1.1
+  - numpy=1.16
+  - tensorflow-gpu=1.14
+  - matplotlib=3.1
   - pandas=0.25.1
   - scikit-learn=0.21
-  - keras=2.2.4
+  - keras>=2.2,<2.3
   - h5py<3
+  - pip:
+    - mlflow[extras]==1.2.0
+    - mflux-ai>=0.5.1
 ```
 
-Open an Anaconda prompt, navigate to the `boston_crime` folder and write `conda env create -f environment.yml`. Now activate 
-this environment with `conda activate boston`.
-
-Then write `pip install mlflow[extras]==1.2.0 "mflux-ai>=0.5.1"`.
-
+Open an Anaconda prompt, navigate to the `boston_crime` folder and run `conda env create -f environment.yml`. Now activate 
+this environment by running `conda activate boston`.
 
 ## Download datasets
 Inside the folder `boston_crime`, create a folder called `data`.
