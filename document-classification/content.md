@@ -17,9 +17,9 @@ When you're ready, move on to the tutorial:
 
 # Install MLflow
 
-Run the following command in the terminal to install MLflow and MFlux.ai.
+Run the following command in the terminal to install dependencies like MLflow and MFlux.ai.
 
-```pip install mlflow[extra]==1.2.0 "mflux-ai>=0.4.0"```
+```pip install mlflow[extra]==1.2.0 "mflux-ai>=0.5.1" tqdm```
 
 
 
@@ -36,10 +36,10 @@ import json
 import os
 import pprint
 
-with open(os.path.join('data', 'videos.json')) as json_file:
+with open(os.path.join("data", "videos.json")) as json_file:
     videos = json.load(json_file)
 
-print('We have {} videos'.format(len(videos)))
+print("We have {} videos".format(len(videos)))
 print("Data for the first video looks like this:")
 pprint.pprint(videos[0])
 ```
@@ -118,7 +118,7 @@ def vectorize_video_input(video):
     return input_vector
 
 
-print('The first video input in vector form looks like this:')
+print("The first video input in vector form looks like this:")
 print(vectorize_video_input(videos[0]))
 ```
 
@@ -143,7 +143,7 @@ pprint.pprint(categories)
 category_id_to_index = {
     category["id"]: index for index, category in enumerate(categories)
 }
-print('Category id to index in target vector:')
+print("Category id to index in target vector:")
 print(category_id_to_index)
 
 
@@ -155,7 +155,7 @@ def vectorize_video_target(video):
     return target_vector
 
 
-print('The first video target category in one-hot-vector form looks like this:')
+print("The first video target category in one-hot-vector form looks like this:")
 print(vectorize_video_target(videos[0]))
 ```
 
@@ -227,25 +227,14 @@ model.compile(
 )
 ```
 
-Train the model:
+Train the model and evaluate the validation accuracy each epoch:
 ```
-model.fit(training_input_vectors, training_target_vectors, epochs=50)
-```
-
-Evaluate the accuracy of your model on the validation set:
-
-```
-evaluation_scores = model.evaluate(validation_input_vectors, validation_target_vectors)
-
-for i, metric_name in enumerate(model.metrics_names):
-    print("Validation {}: {:.3f}".format(metric_name, evaluation_scores[i]))
-```
-
-It'll print something like this (the numbers may vary from run to run):
-
-```
-Validation loss: 0.754
-Validation acc: 0.625
+history = model.fit(
+    training_input_vectors,
+    training_target_vectors,
+    epochs=50,
+    validation_data=(validation_input_vectors, validation_target_vectors),
+)
 ```
 
 A perfect validation loss would be 0, and a perfect validation accuracy would be 1 (or 100 %).
@@ -259,7 +248,7 @@ Was the validation accuracy bad? Try to tweak the following parameters and see h
 Here's an example of how we can get a prediction from the model, and compare it with the ground truth:
 
 ```
-print('The last video (in the validation set):')
+print("The last video (in the validation set):")
 pprint.pprint(videos[-1])
 
 # model.predict expects a list of examples (a 2D numpy array)
@@ -267,8 +256,8 @@ pprint.pprint(videos[-1])
 output_vectors = model.predict(np.array([input_vectors[-1]]))
 output_vector = output_vectors[0]
 
-print('Output vector: {}'.format(str(output_vector)))
-print('Target vector: {}'.format(str(target_vectors[-1])))
+print("Output vector: {}".format(str(output_vector)))
+print("Target vector: {}".format(str(target_vectors[-1])))
 ```
 
 It may print something like this:
@@ -288,26 +277,37 @@ If the model was wrong, why do you think it failed? What can you do to make your
 
 # Log metrics and store machine learning model in MFLux.ai
 
-Let's log the validation loss and accuracy metric and store the model in MFlux.ai
+Four different metrics are calculated each epoch: `acc`, `loss`, `val_acc` and `val_loss`.
+
+Let's log those four metric series and store the model in MFlux.ai:
 
 ```python
-import mlflow
-import mlflow.sklearn
+import mlflow.keras
 import mflux_ai
+from tqdm import tqdm
 
 # Note: in the following line, insert the project token shown on your dashboard page.
 mflux_ai.init("your_project_token_goes_here")
 
-for i, metric_name in enumerate(model.metrics_names):
-    mlflow.log_metric("validation_"+ metric_name, evaluation_scores[i])
-mlflow.sklearn.log_model(model, "model")
+for i in tqdm(history.epoch, desc="Logging metrics"):
+    metrics = {}
+    for metric_name in history.history:
+        metrics[metric_name] = history.history[metric_name][i]
+    mlflow.log_metrics(metrics, step=i)
+
+mlflow.keras.log_model(model, "model")
 ```
 
 # Check your tracking UI
 
-You should now be able to see the metric and model that you logged in your MLflow tracking UI.
+Go go [https://www.mflux.ai/dashboard/](https://www.mflux.ai/dashboard/) and open your tracking UI.
+Click your run, and you should see this, among other things (numbers may vary):
 
+![Aggregated metrics](aggregated_metrics.png)
 
+If you click one of those metrics, you'll see the whole series for that metric, like this:
+
+![Validation accuracy series plot](validation_accuracy_plot.png)
 
 # Things to do after you finish the tutorial
 
