@@ -1,0 +1,8 @@
+{
+  "title": "EDA and Forecasting on Boston Crime Data",
+  "short_description": "Do some exploratory data analysis on a Boston crime dataset. Then combine it with weather data and do forecasting",
+  "tags": ["EDA", "keras", "analysis", "forecasting", "RNN"],
+  "rank": 1,
+  "is_listed": true,
+  "cover_image_filename": "name-this.jpg"
+}
