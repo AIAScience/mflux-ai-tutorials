@@ -200,7 +200,7 @@ When we run the code now, we get an MSE of 638 and this plot
 
 ![forecast plotted vs actual data](images/SS_AR_500_10.png)
 
-###Upload to Mflux
+### Upload to Mflux
 To upload the model to Mflux:
 ```python
 mflux_ai.init("your_token_goes_here")
