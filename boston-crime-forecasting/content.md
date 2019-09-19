@@ -546,7 +546,7 @@ def make_model(layers):
 
 We make a loop that tries out some configurations of networks and logs the results to Mflux.
 ```python
-experiment_id = mlflow.set_experiment("Minimalist Boston")
+experiment_id = mlflow.set_experiment("Boston Hourly")
 for i in range(6):
     for j in range(1):
         for k in range(1):
@@ -612,7 +612,7 @@ models_sorted = []
 Load the models we have stored to Mlfux and sort them by mean squared error.
 ```python
 # get and sort models by mse
-mlflow.set_experiment("Boston_Hourly")
+mlflow.set_experiment("Boston Hourly")
 runs = mlflow.search_runs()
 for index, row in runs.iterrows():
     models_sorted.append([row[4], row])
