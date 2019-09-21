@@ -289,13 +289,14 @@ from tqdm import tqdm
 # Note: in the following line, insert the project token shown on your dashboard page.
 mflux_ai.init("your_project_token_goes_here")
 
-for i in tqdm(history.epoch, desc="Logging metrics"):
-    metrics = {}
-    for metric_name in history.history:
-        metrics[metric_name] = history.history[metric_name][i]
-    mlflow.log_metrics(metrics, step=i)
+with mlflow.start_run() as run:
+    for i in tqdm(history.epoch, desc="Logging metrics"):
+        metrics = {}
+        for metric_name in history.history:
+            metrics[metric_name] = history.history[metric_name][i]
+        mlflow.log_metrics(metrics, step=i)
 
-mlflow.keras.log_model(model, "model")
+    mlflow.keras.log_model(model, "model")
 ```
 
 # Check your tracking UI
