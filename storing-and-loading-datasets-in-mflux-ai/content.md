@@ -10,6 +10,7 @@ enterprise-grade Amazon S3-compatible Object Storage system.
 
 ```python
 import mflux_ai
+import numpy as np
 
 # Note: in the following line, insert the project token shown on your dashboard page.
 mflux_ai.init("your_project_token_goes_here")
