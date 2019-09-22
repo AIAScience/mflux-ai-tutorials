@@ -1,0 +1,6 @@
+{
+  "title": "Logging a batch of metrics",
+  "short_description": "How to log a batch of metrics in one single request",
+  "tags": ["mlflow", "tracking", "api"],
+  "is_listed": false
+}
