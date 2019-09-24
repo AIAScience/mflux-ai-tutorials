@@ -19,7 +19,7 @@ When you're ready, move on to the tutorial:
 
 Run the following command in the terminal to install dependencies like MLflow and MFlux.ai.
 
-```pip install mlflow[extra]==1.2.0 "mflux-ai>=0.5.1" tqdm```
+```pip install mlflow[extra]==1.2.0 "mflux-ai>=0.5.1"```
 
 
 
@@ -277,31 +277,24 @@ If the model was wrong, why do you think it failed? What can you do to make your
 
 # Log metrics and store machine learning model in MFLux.ai
 
-Four different metrics are calculated each epoch: `acc`, `loss`, `val_acc` and `val_loss`.
-
-Let's log those four metric series and store the model in MFlux.ai:
+Four different metrics are calculated each epoch: `acc`, `loss`, `val_acc` and `val_loss`. Let's
+log those four metric series and store the final model in MFlux.ai. This can be done with MLflow's
+experimental automatic integration with Keras. Insert the following snippet in your script,
+somewhere _before_ `history = model.fit( ...`:
 
 ```python
 import mlflow.keras
 import mflux_ai
-from tqdm import tqdm
 
 # Note: in the following line, insert the project token shown on your dashboard page.
 mflux_ai.init("your_project_token_goes_here")
 
-with mlflow.start_run() as run:
-    for i in tqdm(history.epoch, desc="Logging metrics"):
-        metrics = {}
-        for metric_name in history.history:
-            metrics[metric_name] = history.history[metric_name][i]
-        mlflow.log_metrics(metrics, step=i)
-
-    mlflow.keras.log_model(model, "model")
+mlflow.keras.autolog()
 ```
 
 # Check your tracking UI
 
-Go go [https://www.mflux.ai/dashboard/](https://www.mflux.ai/dashboard/) and open your tracking UI.
+Go to [https://www.mflux.ai/dashboard/](https://www.mflux.ai/dashboard/) and open your tracking UI.
 Click your run, and you should see this, among other things (numbers may vary):
 
 ![Aggregated metrics](aggregated_metrics.png)
