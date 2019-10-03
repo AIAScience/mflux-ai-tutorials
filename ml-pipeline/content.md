@@ -1,5 +1,7 @@
 # ML Pipeline
-
+A machine learning process starts with data in and eventually gives data out. In between many manipulations are applied 
+to the data. All these steps are the pipeline. A proper pipeline makes the project reproducible, modular, monitored, 
+tested and well documented.
 
 ## Install Anaconda on your computer
 

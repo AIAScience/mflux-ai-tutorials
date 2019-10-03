@@ -1,3 +1,7 @@
+By classifying documents, we are aiming to assign one or more classes or categories to a document, making it easier to 
+manage and sort. This is especially useful for publishers, financial institutions, insurance companies or any industry 
+that deals with large amounts of content. 
+
 # Set up Python with machine learning libraries
 
 Downloading and installing data science-related python packages manually can be hard and tedious. Anaconda to the rescue! It's basically a bundle that includes python and a number of common python dependencies. Download and install it if you don't have it (you should get the Python 3.* version):
@@ -280,7 +284,7 @@ If the model was wrong, why do you think it failed? What can you do to make your
 Four different metrics are calculated each epoch: `acc`, `loss`, `val_acc` and `val_loss`. Let's
 log those four metric series and store the final model in MFlux.ai. This can be done with MLflow's
 experimental automatic integration with Keras. Insert the following snippet in your script,
-somewhere _before_ `history = model.fit(`:
+somewhere _before_ `history = model.fit( ...`:
 
 ```python
 import mlflow.keras
@@ -291,12 +295,6 @@ mflux_ai.init("your_project_token_goes_here")
 
 mlflow.keras.autolog()
 ```
-
-`mlflow.keras.autolog()` performs one HTTP request against the MLflow server after each epoch,
-and this introduces an overhead that is on the order of 0.25 seconds per epoch. If you are
-looking to speed up the logging, check ouf the
-[guide on how to log batches of metrics using the MLflow API](../log-batch/), which explains how
-to significantly reduce this overhead.
 
 # Check your tracking UI
 

@@ -1,6 +1,6 @@
 {
   "title": "MLflow API usage example",
-  "short_description": "How to use the MLflow API to log and share models and data",
+  "short_description": "How to use the API to log and share models and data",
   "tags": ["cheat sheet", "commands", "mlflow", "API", "log models"],
   "rank": 6,
   "is_listed": true,

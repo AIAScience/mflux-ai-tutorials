@@ -1,4 +1,10 @@
 # Analysis and Forecasting on Boston Crime Data
+This tutorial shows something close to a real data science project. It is more complicated than most other tutorials on 
+this page.
+
+It helps with problems that show up once you go beyond a tutorial and start trying to handle a bigger problem. Skim 
+through it to get an overview, and focus on any part you find useful.
+
 We do an exploratory data analysis on a Boston crime dataset from Kaggle, focusing on crime over time. Then we merge this with
 a Boston weather dataset and try to forecast crimes per hour.
 

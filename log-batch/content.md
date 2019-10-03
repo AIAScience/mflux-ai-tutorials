@@ -51,9 +51,6 @@ for i in tqdm(history.epoch, desc="Logging metrics"):
     mlflow.log_metrics(metrics, step=i)
 ```
 
-The speed of this approach is similar to `mlflow.keras.autolog()`, which performs one
-`log_metrics` request after each epoch during training.
-
 If you want to further improve the speed, you can use MLflow's `log_batch` method to log all
 metrics in a single request instead of 50 requests:
 
@@ -82,9 +79,3 @@ with mlflow.start_run() as active_run:
 
     mlflow_client.log_batch(run_id=active_run.info.run_id, metrics=all_metrics)
 ```
-
-Note that there is a limit on the number of metrics that you can log in a single `log_batch`
-call. This limit is typically 1000. If you exceed the limit, you'll get an error like this:
-
-> A batch logging request can contain at most 1000 metrics. Got 2000 metrics. Please split up
-metrics across multiple requests and try again.

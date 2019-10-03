@@ -2,7 +2,7 @@
   "title": "Anomaly detection in time series",
   "short_description": "Unsupervised anomaly detection in time series",
   "tags": ["time series", "prophet", "anomaly-detection", "unsupervised"],
-  "rank": 4,
+  "rank": 3,
   "is_listed": true,
   "cover_image_filename": "anomaly_detection.png"
 }

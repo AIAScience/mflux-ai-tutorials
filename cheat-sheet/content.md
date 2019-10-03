@@ -1,3 +1,5 @@
+A collection of the most common MLflow and MFlux commands.
+
 ```python
 import mlflow
 import mflux_ai
@@ -7,7 +9,7 @@ _keras_ functions are the same for _sklearn_
 
 |Command|Help|
 |---|---|
-|**`with mlflow.start_run() as run:`<br>&nbsp;&nbsp;&nbsp;&nbsp;`mlflow.keras.log_model(model, artifact_path)`**|exits after indent|
+|**`with mlflow.start_run() as run:`<br>&nbsp;&nbsp;&nbsp;&nbsp;`mlflow.keras.log_model(model)`**|exits after indent|
 |**`mlflow.search_runs(experiment_ids=None, filter_string='')`**|_Get a DataFrame of runs_|
 |**`mlflow.set_experiment(experiment_name)`**|_Set as active experiment, create if not existing_|
 |**`mlflow.experiments.list_experiments()`**|_Get a list of experiments_|
