@@ -1,5 +1,10 @@
 # Unsupervised anomaly detection in time series
+Anomaly detection in data from surveillance of a system helps flag failures or outliers for human experts to investigate. 
+For example in maintenance of a gas pipeline or monitoring a patient.
 
+
+When doing time series forecasting, or any other kind of time series analysis, anomalies or errors in the data can cause 
+problems. The result will be better if these can be identified and removed, or otherwise accounted for.
 
 ## Install Anaconda on your computer
 

@@ -2,7 +2,7 @@
   "title": "Storing and loading datasets in MFlux.ai",
   "short_description": "How to upload and download datasets to/from the MFlux.ai cloud",
   "tags": ["storage", "versioning"],
-  "rank": 3,
+  "rank": 4,
   "is_listed": true,
   "cover_image_filename": "object_storage_for_ai.png"
 }

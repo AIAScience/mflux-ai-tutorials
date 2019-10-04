@@ -1,4 +1,9 @@
 # Time series forecasting tutorial
+Time series forecasting is used in finance, meteorology, budgeting, logistics and any endeavor that has a lot to gain 
+by good predictions.
+
+Time series forecasting typically means predicting the future by observing the past. For example, predicting future 
+sales based on past and current parameters.
 
 In this tutorial we will get started with time series forecasting using autoregression (AR) models.
 
