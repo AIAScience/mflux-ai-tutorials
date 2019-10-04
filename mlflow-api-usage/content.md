@@ -1,6 +1,6 @@
 # MLflow API-usage Example
-This example handles a very simple machine learning task. The focus is on using MFlux and MLflow to log and share models 
-and datasets.
+This is the MFlux/MLflow cheat sheet in example form. It is an example of using MFlux and MLflow to share data and 
+machine learning models with a team.
 
 ## Dependencies
 You will need MFlux, MLflow, keras, scikit-learn, python, numpy and matplotlib. You may want to create a separate conda 

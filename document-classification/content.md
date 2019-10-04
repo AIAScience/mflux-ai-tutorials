@@ -1,4 +1,7 @@
 # Set up Python with machine learning libraries
+By classifying documents, we are assigning one or more classes or categories to a document, making it easier to manage 
+and sort. This is especially useful for publishers, financial institutions, insurance companies or any industry 
+that deals with large amounts of content.
 
 Downloading and installing data science-related python packages manually can be hard and tedious. Anaconda to the rescue! It's basically a bundle that includes python and a number of common python dependencies. Download and install it if you don't have it (you should get the Python 3.* version):
 https://www.anaconda.com/download/

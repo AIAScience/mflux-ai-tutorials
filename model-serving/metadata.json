@@ -11,7 +11,7 @@
     "mlflow",
     "docker"
   ],
-  "rank": 5,
+  "rank": 8,
   "is_listed": true,
   "cover_image_filename": "rest-api-model-serving-cover.png"
 }
