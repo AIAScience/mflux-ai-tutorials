@@ -1,0 +1,8 @@
+{
+  "title": "Hyperparameter optimalization with MFlux",
+  "short_description": "MFlux makes keeping track of hyperparameter searches easy",
+  "tags": ["Hyperparameter"],
+  "rank": 10,
+  "is_listed": true,
+  "cover_image_filename": "hyper-para-opt.png"
+}
