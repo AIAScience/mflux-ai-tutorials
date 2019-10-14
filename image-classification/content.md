@@ -1,5 +1,13 @@
 # Image classification
 
+Uses for image classification include:
+
+- Quality control of produced goods
+- Sorting images based on desired criteria
+- Searching for similar images
+- Face recognition
+- Autonomous driving
+
 This tutorial shows how you can train an image classification model. We will develop a Convolutional Neural Network (CNN) for the classification. We use the MNIST dataset which is an image dataset of handwritten digits. It has has 60,000 training images and 10,000 test images, each of which are grayscale 28 x 28 sized images.
 
 ## Install Anaconda on your computer
