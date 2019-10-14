@@ -83,7 +83,7 @@ Now we run this function:
 y_pred, lr_model, score = lin_reg(x, y1, x_pred, y1_target)
 ```
 
-We upload the result to MFlux. Notice that the model is logged with `log_model()` and the score with `log_metric`
+We upload the result to MFlux. Notice that the model is logged with `log_model()` and the score with `log_metric()`
 ```python
 # upload linear regression model to MFlux
 mlflow.set_experiment("Linear Regression")
