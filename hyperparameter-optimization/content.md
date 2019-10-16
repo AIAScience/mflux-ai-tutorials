@@ -131,8 +131,18 @@ one run
 ![Experiment graph](images/experiment_graph.png)
 
 
+## Other Optimizers
+We used Hyperas in this tutorial, but there are many programs for hyperparameter optimization, for example:
+* [Nevergrad](https://github.com/facebookresearch/nevergrad)
+* [Hyperopt](https://github.com/hyperopt/hyperopt) (hyperas is hyperopt for keras)
+* [Keras-tuner](https://github.com/keras-team/keras-tuner)
+* [Talos](https://github.com/autonomio/talos)
+* [SHERPA](https://parameter-sherpa.readthedocs.io/en/latest/)
+* [Scikit-learn](https://scikit-learn.org/stable/modules/classes.html#hyper-parameter-optimizers) also has built in 
+hyperparameter optimization
+
 ## Going Further
-The best honest entries in the Kaggle competition currently score around 99.7 % (on the unseen part of the data, the way it is split
+The best honest entries in the rolling MNIST Kaggle competition currently score around 99.7 % (on the unseen part of the data, the way it is split
 on Kaggle). Here are some suggestions for how to get closer to this score:
 * Obtain more powerful hardware and use GPU computing (for instance with CUDA). Speeding up training will let us do more 
 involved searches.
