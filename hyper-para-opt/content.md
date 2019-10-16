@@ -4,7 +4,7 @@ Neural Network to classify handwritten digits using the famous MNIST dataset. Gr
 have? How many filters in the convolutional layers? Will we use dropout and so on? We will need to run tests 
 to figure out the best configuration.
 
-MFlux makes keeping track of and comparing such test runs easy. We will use Hyperas to run the optimalization.
+MFlux makes keeping track of and comparing such test runs easy. We will use Hyperas to run the optimization.
 
 _Running the experiment in this tutorial will be quick and easy for the human, but the machine will have to work a long time, 
 likely several hours._
@@ -12,7 +12,7 @@ likely several hours._
 ## Prerequisites
 Create a new environment and run the following installations
 `conda install python=3.7`
-`pip install numpy==1.17 tensorflow==2 mlflow[extras]==1.3 keras==2.3 mflux_ai==0.5.1 scikit-learn==0.21  hyperas==0.4`
+`pip install numpy==1.17 tensorflow==2 mlflow[extras]==1.3 keras==2.3 mflux_ai>=0.5.3 scikit-learn==0.21  hyperas==0.4`
 
 
 ## Get and Prepare Data
@@ -29,7 +29,7 @@ from hyperopt import Trials, STATUS_OK, tpe
 
 Initialize MFlux and set an experiment to store the models we will train in:
 ```python
-mflux_ai.init("UC9VLr8l5lp6mgyt8aJ1MA")
+mflux_ai.init("your_key_goes_here")
 mlflow.set_experiment("MNIST hyperas")
 ```
 
@@ -101,12 +101,13 @@ def model(X_train, Y_train, X_test, Y_test):
             mlflow.log_metric(key="val_acc", value=history.history["val_accuracy"][i], step=i)
             mlflow.log_metric(key="acc", value=history.history["accuracy"][i], step=i)
     score, acc = model.evaluate(X_test, Y_test, verbose=0)
-    return {'loss': -acc, 'status': STATUS_OK, 'model': model}
+    return {'loss': -acc, 'status': STATUS_OK}
 ```
 
 ## Running the Search
-Finally we call the function to actually do the optmization. Currently `epochs = 2` in `model()` and `max_evals=2` in the 
-following. This is to gauge the runtime before setting them to something useful, like `epochs = 25` and `max_evals=15`.
+Finally we call the function to actually do the optimization. Currently `epochs = 2` in `model()` and `max_evals=2` in the 
+following. This is to gauge the runtime and behaviour of the script before setting them to something useful, like `epochs = 25` 
+and `max_evals=15`.
 ```python
 best_run, best_model = optim.minimize(model=model, data=get_data, algo=tpe.suggest, max_evals=2, trials=Trials())
 X_train, Y_train, X_test, Y_test = get_data()
@@ -117,28 +118,29 @@ print(best_model.evaluate(X_test, Y_test, verbose=0))
 
 ## Inspecting the Models
 All the trained models have now been logged to MFlux, with the tags telling us what the hyperparameters are set to and a
-history of accuray and valuation accuracy per epoch.
+history of accuracy and validation accuracy per epoch.
 
 The main page for this experiment in MFlux will look something like this
 ![Experiment main page](images/experiment_main.png)
 
-We can sort valuation accuracy by descending to see the models that perform best on images not seen during training
+We can sort validation accuracy by descending to see the models that perform best on images not seen during training
 ![Experiment sort](images/experiment_sort.png)
 
-By clicking on a run (under "Date") we can see more details about it. This is the graph for valuation accuracy over time for 
+By clicking on a run (under "Date") we can see more details about it. This is the graph for validation accuracy over time for 
 one run
 ![Experiment graph](images/experiment_graph.png)
 
 
 ## Going Further
-The best honest entries in the Kaggle comptition currently score around 99.7 % (on the unseen part of the data, the way it is split
+The best honest entries in the Kaggle competition currently score around 99.7 % (on the unseen part of the data, the way it is split
 on Kaggle). Here are some suggestions for how to get closer to this score:
 * Obtain more powerful hardware and use GPU computing (for instance with CUDA). Speeding up training will let us do more 
 involved searches.
 * Look into more advanced network techniques like batch normalization, a deeper network or swapping the pooling layers 
 for convolutional layers.
+* Make one or more hyperparameters that decide if more layers are to be used in the model.
 * Use a callback during training to keep the best model.
-* Apply tweaks like strech and rotation to the data to artificially increase the dataset in size.
+* Apply tweaks like stretch and rotation to the data to artificially increase the dataset in size.
 * Use an average of many good networks.
-* Investigate the mislabled output images for ideas on what the network is struggling with.
+
 
