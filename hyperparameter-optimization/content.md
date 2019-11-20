@@ -71,12 +71,12 @@ dict with loss (the value to be minimized by `hyperas.optim()`). Note that it is
 returned dict, but that may introduce a risk of getting a memory leak, so we are not doing that here.
 
 ```python
-def model(X_train, Y_train, X_test, Y_test):
+def train_model(X_train, Y_train, X_test, Y_test):
     from tensorflow import keras
-    f1 = {{quniform(8, 64, 4)}}                 # defining the variables to optimize
-    k1 = {{quniform(3, 10, 1)}}                 # and the valid values for them
+    f1 = {{quniform(8, 64, 4)}}  # defining the variables to optimize
+    k1 = {{quniform(3, 10, 1)}}  # and the valid values for them
     d1 = {{uniform(0, 1)}}
-    f2 = {{quniform(8, 128, 4)}}                # quniform(min, max, q) means uniform(min, max) with step size q
+    f2 = {{quniform(8, 128, 4)}}  # quniform(min, max, q) means uniform(min, max) with step size q
     k2 = {{quniform(3, 10, 1)}}
     d2 = {{uniform(0, 1)}}
     dense = {{quniform(8, 128, 4)}}
@@ -97,9 +97,13 @@ def model(X_train, Y_train, X_test, Y_test):
     model.add(keras.layers.Dense(int(dense)))
     model.add(keras.layers.Dropout(int(d3)))
     model.add(keras.layers.Dense(10, activation='softmax'))
-    model.compile(optimizer=keras.optimizers.Adam(), loss="categorical_crossentropy", metrics=["accuracy"])
+    model.compile(
+        optimizer=keras.optimizers.Adam(), loss="categorical_crossentropy", metrics=["accuracy"]
+    )
     model.summary()
-    history = model.fit(X_train, Y_train, epochs=epochs, batch_size=int(bs), validation_data=(X_test, Y_test))
+    history = model.fit(
+        X_train, Y_train, epochs=epochs, batch_size=int(bs), validation_data=(X_test, Y_test)
+    )
     # logging to MFlux.ai:
     with mlflow.start_run() as run:
         mlflow.keras.log_model(model, "model")
@@ -118,7 +122,9 @@ Finally we call the function to actually do the optimization. Currently `epochs 
 following. This is to gauge the runtime and behaviour of the script before setting them to something useful, like `epochs = 25` 
 and `max_evals=15`.
 ```python
-best_run, _ = optim.minimize(model=model, data=get_data, algo=tpe.suggest, max_evals=2, trials=Trials())
+best_run, _ = optim.minimize(
+    model=train_model, data=get_data, algo=tpe.suggest, max_evals=2, trials=Trials()
+)
 print("Recommended hyper-parameters:")
 print(best_run)
 ```
