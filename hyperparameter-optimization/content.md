@@ -4,7 +4,7 @@ Neural Network to classify handwritten digits using the famous MNIST dataset. Gr
 have? How many filters in the convolutional layers? Will we use dropout and so on? We will need to run tests 
 to figure out the best configuration.
 
-MFlux makes keeping track of and comparing such test runs easy. We will use Hyperas to run the optimization.
+MFlux.ai makes keeping track of and comparing such test runs easy. We will use Hyperas to run the optimization.
 
 _Running the experiment in this tutorial will be quick and easy for the human, but the machine will have to work a long time, 
 likely several hours._
@@ -27,7 +27,7 @@ from hyperas.distributions import uniform, quniform
 from hyperopt import Trials, STATUS_OK, tpe
 ```
 
-Initialize MFlux and set an experiment to store the models we will train in:
+Initialize MFlux.ai and set an experiment to store the models we will train in:
 ```python
 mflux_ai.init("your_key_goes_here")
 mlflow.set_experiment("MNIST hyperas")
@@ -57,10 +57,13 @@ We will call this function later as input to `hyperas.optim()`.
 
 
 ## Defining the model
+
 Hyperas requires us to define the model in a function. Notice that the input is simply the output from `get_data()`. The 
 hyperparameters are defined inside the function, with the distributions they are to be drawn from. Aside from this, the 
-network is build us usual in keras, and the logging to MFlux is also done in the familiar way. The final line returns a 
-dict with loss (the value to be minimized by `hyperas.optim()`) and the actual model.
+network is built us usual in keras, and the logging to MFlux.ai is also done in the familiar way. The final line returns a 
+dict with loss (the value to be minimized by `hyperas.optim()`). Note that it is possible to also include the model in the
+returned dict, but that may introduce a risk of getting a memory leak, so we are not doing that here.
+
 ```python
 def model(X_train, Y_train, X_test, Y_test):
     from tensorflow import keras
@@ -91,7 +94,7 @@ def model(X_train, Y_train, X_test, Y_test):
     model.compile(optimizer=keras.optimizers.Adam(), loss="categorical_crossentropy", metrics=["accuracy"])
     model.summary()
     history = model.fit(X_train, Y_train, epochs=epochs, batch_size=int(bs), validation_data=(X_test, Y_test))
-    # logging to MFlux:
+    # logging to MFlux.ai:
     with mlflow.start_run() as run:
         mlflow.keras.log_model(model, "model")
         tags = {'f1': f1, 'f2': f2, 'k1': k1, 'k2': k2, 'd1': d1, 'd2': d2, 'd3': d3, 'dense': dense,
@@ -109,18 +112,17 @@ Finally we call the function to actually do the optimization. Currently `epochs 
 following. This is to gauge the runtime and behaviour of the script before setting them to something useful, like `epochs = 25` 
 and `max_evals=15`.
 ```python
-best_run, best_model = optim.minimize(model=model, data=get_data, algo=tpe.suggest, max_evals=2, trials=Trials())
-X_train, Y_train, X_test, Y_test = get_data()
-print("Evalutation of best performing model:")
-print(best_model.evaluate(X_test, Y_test, verbose=0))
+best_run, _ = optim.minimize(model=model, data=get_data, algo=tpe.suggest, max_evals=2, trials=Trials())
+print("Recommended hyper-parameters:")
+print(best_run)
 ```
 
 
 ## Inspecting the Models
-All the trained models have now been logged to MFlux, with the tags telling us what the hyperparameters are set to and a
+All the trained models have now been logged to MFlux.ai, with the tags telling us what the hyperparameters are set to and a
 history of accuracy and validation accuracy per epoch.
 
-The main page for this experiment in MFlux will look something like this
+The main page for this experiment in MFlux.ai will look something like this
 ![Experiment main page](images/experiment_main.png)
 
 We can sort validation accuracy by descending to see the models that perform best on images not seen during training
@@ -131,17 +133,20 @@ one run
 ![Experiment graph](images/experiment_graph.png)
 
 
-## Other Optimizers
-We used Hyperas in this tutorial, but there are many programs for hyperparameter optimization, for example:
+## Other hyperparameter tuning libraries
+
+We used Hyperas in this tutorial, but there are many other libraries for hyperparameter optimization, for example:
+
 * [Nevergrad](https://github.com/facebookresearch/nevergrad)
-* [Hyperopt](https://github.com/hyperopt/hyperopt) (hyperas is hyperopt for keras)
+* [Hyperopt](https://github.com/hyperopt/hyperopt) (hyperas is a wrapper around hyperopt)
 * [Keras-tuner](https://github.com/keras-team/keras-tuner)
 * [Talos](https://github.com/autonomio/talos)
 * [SHERPA](https://parameter-sherpa.readthedocs.io/en/latest/)
-* [Scikit-learn](https://scikit-learn.org/stable/modules/classes.html#hyper-parameter-optimizers) also has built in 
-hyperparameter optimization
+* [Scikit-learn](https://scikit-learn.org/stable/modules/classes.html#hyper-parameter-optimizers) also has some built-in 
+hyperparameter optimization alrogithms
 
 ## Going Further
+
 The best honest entries in the rolling MNIST Kaggle competition currently score around 99.7 % (on the unseen part of the data, the way it is split
 on Kaggle). Here are some suggestions for how to get closer to this score:
 * Obtain more powerful hardware and use GPU computing (for instance with CUDA). Speeding up training will let us do more 
@@ -152,5 +157,3 @@ for convolutional layers.
 * Use a callback during training to keep the best model.
 * Apply tweaks like stretch and rotation to the data to artificially increase the dataset in size.
 * Use an average of many good networks.
-
-
