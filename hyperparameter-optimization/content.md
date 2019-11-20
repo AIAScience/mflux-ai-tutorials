@@ -107,8 +107,10 @@ def train_model(X_train, Y_train, X_test, Y_test):
     # logging to MFlux.ai:
     with mlflow.start_run() as run:
         mlflow.keras.log_model(model, "model")
-        tags = {'f1': f1, 'f2': f2, 'k1': k1, 'k2': k2, 'd1': d1, 'd2': d2, 'd3': d3, 'dense': dense,
-                'batch_size': bs}
+        tags = {
+            'f1': f1, 'f2': f2, 'k1': k1, 'k2': k2, 'd1': d1, 'd2': d2, 'd3': d3, 'dense': dense,
+            'batch_size': bs
+        }
         mlflow.set_tags(tags)
         for i in range(epochs):
             mlflow.log_metric(key="val_acc", value=history.history["val_accuracy"][i], step=i)
