@@ -10,9 +10,15 @@ _Running the experiment in this tutorial will be quick and easy for the human, b
 likely several hours._
 
 ## Prerequisites
-Create a new environment and run the following installations
-`conda install python=3.7`
-`pip install numpy==1.17 tensorflow==2 mlflow[extras]==1.3 keras==2.3 mflux_ai>=0.5.3 scikit-learn==0.21  hyperas==0.4`
+Create a new environment and run the following installations:
+
+```
+conda install python=3.7
+```
+
+```
+pip install numpy==1.17 tensorflow==2 mlflow[extras]==1.3 keras==2.3 mflux_ai>=0.5.3 scikit-learn==0.21 hyperas==0.4
+```
 
 
 ## Get and Prepare Data
