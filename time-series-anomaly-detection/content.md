@@ -20,7 +20,7 @@ Then, to activate your new environment, run ```conda activate anomaly-detection`
 
 ##  Install the required packages
 
-Run ```pip install mlflow[extras]==1.2.0 "mflux-ai>=0.5.1" matplotlib==3.0.0  fbprophet==0.3.post2 boto3==1.9.215```  in your terminal.
+Run ```pip install mlflow[extras]==1.4.0 "mflux-ai>=0.5.1" matplotlib==3.0.0  fbprophet==0.3.post2 boto3==1.9.215```  in your terminal.
 
 ## Tutorial
 
