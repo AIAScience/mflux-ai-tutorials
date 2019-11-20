@@ -1,4 +1,5 @@
-# Hyperparameter Optimalization with MFlux and Hyperas
+# Hyperparameter optimization with MFlux.ai and Hyperas
+
 Most machine learning models require us to make specifications about them. Say we want to use a Convolutional
 Neural Network to classify handwritten digits using the famous MNIST dataset. Great, but how many layers will it 
 have? How many filters in the convolutional layers? Will we use dropout and so on? We will need to run tests 

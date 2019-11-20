@@ -1,5 +1,5 @@
 {
-  "title": "Hyperparameter optimalization with MFlux.ai",
+  "title": "Hyperparameter optimization",
   "short_description": "MFlux.ai makes keeping track of hyperparameter searches easy",
   "tags": ["hyperparameter", "optimization"],
   "rank": 10,
