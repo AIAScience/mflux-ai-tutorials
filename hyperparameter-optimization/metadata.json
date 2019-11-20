@@ -1,7 +1,7 @@
 {
-  "title": "Hyperparameter optimalization with MFlux",
-  "short_description": "MFlux makes keeping track of hyperparameter searches easy",
-  "tags": ["Hyperparameter"],
+  "title": "Hyperparameter optimalization with MFlux.ai",
+  "short_description": "MFlux.ai makes keeping track of hyperparameter searches easy",
+  "tags": ["hyperparameter", "optimization"],
   "rank": 10,
   "is_listed": true,
   "cover_image_filename": "ugly_mnist.png"
