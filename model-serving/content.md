@@ -74,9 +74,8 @@ app = Flask(__name__)
 # Note: in the following line, insert the project token shown on your dashboard page.
 mflux_ai.init("your_project_token_goes_here")
 
-model = mlflow.sklearn.load_model(
-    "s3://mlflow/0/RUN_ID_GOES_HERE/artifacts/model"
-)
+run_id = "RUN_ID_GOES_HERE"
+model = mlflow.sklearn.load_model("runs:/" + run_id + "/model")
 
 
 @app.route("/predict/", methods=['POST'])
