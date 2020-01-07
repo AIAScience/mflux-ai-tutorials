@@ -41,9 +41,7 @@ Create a file train_model.py and paste the following code:
 import mflux_ai
 import mlflow.sklearn
 import os
-import pickle
 from sklearn import datasets
-from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 
 iris = datasets.load_iris()
@@ -68,7 +66,6 @@ Create a file app.py inside a folder named ```app``` and paste the following cod
 import mflux_ai
 import mlflow.sklearn
 import numpy as np
-import pickle
 from flask import Flask, request
 from flask import jsonify
 
@@ -98,14 +95,13 @@ def predict():
 
 In ```app.py```, replace ```RUN_ID_GOES_HERE``` with the actual run id that you found in the model tracking UI.
 
-Let's go through the code. The first code snippet imports the packages and initalizes the Flask application
+Let's go through the code. The first code snippet imports the packages and initializes the Flask application
 
 
 ```python
 import mflux_ai
 import mlflow.sklearn
 import numpy as np
-import pickle
 from flask import Flask, request, send_from_directory
 from flask import jsonify
 
@@ -118,9 +114,8 @@ Next, we load our trained model from MFlux.ai.
 # Note: in the following line, insert the project token shown on your dashboard page.
 mflux_ai.init("your_project_token_goes_here")
 
-model = mlflow.sklearn.load_model(
-    "s3://mlflow/0/RUN_ID_GOES_HERE/artifacts/model"
-)
+run_id = "RUN_ID_GOES_HERE"
+model = mlflow.sklearn.load_model("runs:/" + run_id + "/model")
 ```
 
 
@@ -166,8 +161,8 @@ ENTRYPOINT ["pyuwsgi", "--http", ":5000", "--wsgi-file", "app/app.py", "--callab
 Make a  ```requirements.txt``` file to install the required packages. Paste the following code in the file:
 
 ```
-mlflow==1.2.0
-mflux-ai>=0.4.0
+mlflow==1.3.0
+mflux-ai>=0.6.0
 boto3==1.9.215
 minio==4.0.20
 scikit-learn==0.21.3
@@ -248,7 +243,7 @@ RUN echo "source activate env" > ~/.bashrc
 ENV PATH /opt/conda/envs/env/bin:$PATH
 RUN conda config --append channels conda-forge
 RUN conda install --yes scikit-learn==0.21.3
-RUN pip install --no-cache-dir mlflow==1.2.0 minio==4.0.20 boto3==1.9.215 mflux-ai>=0.5.1
+RUN pip install --no-cache-dir mlflow==1.3.0 minio==4.0.20 boto3==1.9.215 mflux-ai>=0.6.0
 RUN mkdir /model-serving/
 WORKDIR /model-serving/
 COPY serve.py /model-serving/serve.py
