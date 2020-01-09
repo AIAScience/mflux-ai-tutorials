@@ -31,8 +31,8 @@ dependencies:
   - keras>=2.2,<2.3
   - h5py<3
   - pip:
-    - mlflow[extras]==1.2.0
-    - mflux-ai>=0.5.1
+    - mlflow[extras]==1.3.0
+    - mflux-ai>=0.6.0
 ```
 
 Open an Anaconda prompt, navigate to the `boston_crime` folder and run `conda env create -f environment.yml`. Now activate 

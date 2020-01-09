@@ -8,7 +8,7 @@ environment, and run:
 
 `conda install "python=3.6.6" "numpy=1.16" "Keras=2.3" "scikit-learn=0.21" "matplotlib=3.1"`
 
-`pip install mlflow[extra]==1.2.0 "mflux-ai>=0.5.1"`
+`pip install mlflow[extra]==1.3.0 "mflux-ai>=0.6.0"`
 
 ## Creating a shared project
 The MFlux dashboard lets us easily create a new shared project. First, create the team for the project, by going to the 

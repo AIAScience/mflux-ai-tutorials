@@ -19,7 +19,7 @@ Then, to activate your new environment, run ```conda activate model-serving```.
 
 ##  Install the required packages
 
-Run ```pip install mlflow[extras]==1.2.0 "mflux-ai>=0.5.1"```  in your terminal.
+Run ```pip install mlflow[extras]==1.3.0 "mflux-ai>=0.6.0"```  in your terminal.
 
 
 ## Tutorial
