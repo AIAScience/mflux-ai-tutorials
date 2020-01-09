@@ -158,7 +158,7 @@ We used Hyperas in this tutorial, but there are many other libraries for hyperpa
 * [Talos](https://github.com/autonomio/talos)
 * [SHERPA](https://parameter-sherpa.readthedocs.io/en/latest/)
 * [Scikit-learn](https://scikit-learn.org/stable/modules/classes.html#hyper-parameter-optimizers) also has some built-in 
-hyperparameter optimization alrogithms
+hyperparameter optimization algorithms
 
 ## Going Further
 
