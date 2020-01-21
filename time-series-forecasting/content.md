@@ -30,7 +30,7 @@ We will need:
 conda install python=3.6.6 pandas=0.25.1 matplotlib=3.1.1 scikit-learn=0.21 statsmodels==0.10.1
 ```
 ```
-pip install mflux-ai>=0.6.0 mlflow[extras]==1.3.0
+pip install mflux-ai>=0.7.0 mlflow[extras]==1.3.0
 ```
 
 In mlflow/examples create a folder called ```time_series_tutorial```.
