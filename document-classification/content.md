@@ -22,7 +22,7 @@ When you're ready, move on to the tutorial:
 
 Run the following command in the terminal to install dependencies like MLflow and MFlux.ai.
 
-```pip install mlflow[extra]==1.3.0 "mflux-ai>=0.6.0"```
+```pip install mlflow[extra]==1.3.0 "mflux-ai>=0.7.0"```
 
 
 
